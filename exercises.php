@@ -120,20 +120,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <table class="w3-table w3-bordered w3-card-4" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
-    <th width="25%">Exercise Name</th>        
-    <th width="25%">Equipment</th>        
-    <th width="20%">Time Per Set</th> 
-    <th width="12%">Body Part</th>
-    <th width="12%">Intensity Factor</th> 
+    <th >Exercise Name</th>        
+    <th >Equipment</th>        
+    <th >Time Per Set</th> 
+    <th >Body Part</th>
+    <th >Intensity Factor</th> 
   </tr>
   </thead>
   <?php foreach ($list_of_exercises as $exercise):  ?>
   <tr>
-    <td><?php echo $exercise['Exercise Name']; ?></td>
-    <td><?php echo $exercise['Equipment']; ?></td>
-    <td><?php echo $exercise['Time Per Set']; ?></td>
-    <td><?php echo $exercise['Body Part']; ?></td>
-    <td><?php echo $exercise['Intensity Factor']; ?></td>
+    <td ><?php echo $exercise['name']; ?></td>
+    <td><?php echo $exercise['equipment']; ?></td>
+    <td><?php echo $exercise['time_per_set']; ?></td>
+    <td><?php echo $exercise['body_part']; ?></td>
+    <td><?php echo $exercise['intensity_factor']; ?></td>
   </tr>
   <?php endforeach; ?>
 
