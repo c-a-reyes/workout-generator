@@ -1,6 +1,24 @@
 <!-- this php code checks if the user is logged in, if they aren't it redirects them back to the login page. -->
 <?php
-    session_start();
+require('connect-db.php');
+require('exercise_db.php');
+
+session_start();
+
+//echo $_SESSION['username'];
+
+$list_of_exercises = getAllExercises();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add")
+    {
+        addExercise(NULL, $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
+        $list_of_exercises = getAllExercises();
+    }
+
+}
+    //session_start();
 
 
     if(!isset($_SESSION["username"]))
@@ -61,12 +79,70 @@
         </div>
     </nav>
     <div class="container">
-        <h1>Search for an exercise.</h1>
+    <input id="searchBar" type="text" placeholder="Search for an exercise">
+    <style type="text/css">
+        
+  #searchBar{
+  float: center;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: px;
+  font-size: 20px;
+  }
+        </style>
         <p>Search criteria would go here once we integrate it</p>
         <hr>
-        <p>functionality to create an exercise and delete it go here:
-        <p>
-            <a href="dashboard.php">Take me back to the dashboard</a>
+        <h1 >Add an Exercise.</h1>
+            <form name="exerciseForm" action="exercises.php" method="post">
+                <div class="row mb-3 mx-3" style="padding: 5px">
+                    Exercise Name:
+                    <input type="text" class="form-control" name="exercise_name" required />
+                </div>
+                <div class="row mb-3 mx-3" style="padding: 5px">
+                    Equipment:
+                    <input type="text" class="form-control" name="equipment" required />
+                </div>
+                <div class="row mb-3 mx-3" style="padding: 5px">
+                    Time Per Set:
+                    <input type="text" class="form-control" name="time_per_set" required />
+                </div>
+                <div class="row mb-3 mx-3" style="padding: 5px">
+                    Body Part:
+                    <input type="text" class="form-control" name="body_part" required />
+                </div>
+                <div class="row mb-3 mx-3" style="padding: 5px">
+                    Intensity Factor:
+                    <input type="text" class="form-control" name="intensity_factor" required />
+                </div>
+                <input type="submit" value="Add" name="btnAction" class="btn btn-dark" style="margin: 15px" />
+                <hr style="margin: 15px">
+                </form>
+
+                <hr/>
+<h2>List of Exercises</h2>
+<!-- <div class="row justify-content-center">   -->
+<table class="w3-table w3-bordered w3-card-4" style="width:90%">
+  <thead>
+  <tr style="background-color:#B0B0B0">
+    <th >Exercise Name</th>        
+    <th >Equipment</th>        
+    <th >Time Per Set</th> 
+    <th >Body Part</th>
+    <th >Intensity Factor</th> 
+  </tr>
+  </thead>
+  <?php foreach ($list_of_exercises as $exercise):  ?>
+  <tr>
+    <td ><?php echo $exercise['name']; ?></td>
+    <td><?php echo $exercise['equipment']; ?></td>
+    <td><?php echo $exercise['time_per_set']; ?></td>
+    <td><?php echo $exercise['body_part']; ?></td>
+    <td><?php echo $exercise['intensity_factor']; ?></td>
+  </tr>
+  <?php endforeach; ?>
+
+  
+  </table>
     </div>
 </body>
 
