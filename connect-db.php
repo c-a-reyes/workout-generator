@@ -38,10 +38,10 @@
 
  
 /** S22, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on CS server) **/
-$username = 'ecg6wm_c'; 
-$password = 'Winter2022!!';
+$username = 'username'; 
+$password = 'password';
 $host = 'mysql01.cs.virginia.edu';
-$dbname = 'ecg6wm';
+$dbname = 'computing-id';
 $dsn = "mysql:host=$host;dbname=$dbname";      
 
 ////////////////////////////////////////////
