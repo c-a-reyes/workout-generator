@@ -3,18 +3,22 @@
 require('connect-db.php');
 require('exercise_db.php');
 
+session_start();
+
+//echo $_SESSION['username'];
+
 $list_of_exercises = getAllExercises();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add")
     {
-        addExercise($_POST['id'], $_POST['username'], $_POST['name'], $POST['equipment'], $POST['time_per_set'], $POST['body_part'], $POST['intensity_factor']);
+        addExercise(NULL, $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
         $list_of_exercises = getAllExercises();
     }
 
 }
-    session_start();
+    //session_start();
 
 
     if(!isset($_SESSION["username"]))

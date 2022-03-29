@@ -1,12 +1,12 @@
 <?php
 
-function addExercise($id, $username, $name, $equipment, $time, $bodyPart, $intensity)
+function addExercise($id, $username, $intensity, $bodyPart, $time, $equipment, $name)
 {
 	// db handler
 	global $db;
 
 	// write sql
-	//$query = "insert into exercise values('" $id . "'," . $username "'," . $name . "', '" . $equipment . "'," . $time . "'," . $bodyPart "'," . $intensity ")";
+	$query = "insert into exercise values(NULL,'" . $username . "'," . $intensity . ",'" . $bodyPart . "'," . $time . ",'" . $equipment . "','" . $name  . "')";
 
 	// execute the sql
 	$statement = $db->query($query);   // query() will compile and execute the sql
