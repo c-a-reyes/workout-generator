@@ -29,4 +29,70 @@ function getAllExercises()
 	return $results;
 }
 
+function getExercise_byId($id)
+{
+	global $db;
+	$query = "select * from exercise where id = :id";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':id', $id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;	
+}
+
+function getExercise_byUsername($username) {
+	global $db;
+	$query = "select * from exercise where username = :username";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':username', $username);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;
+}
+
+function updateExercise($id, $username, $intensity, $bodyPart, $time, $equipment, $name)
+{
+	global $db;
+	$query = "update exercise set intensity_factor=:intensity, name =:name, body_part=:bodyPart, time_per_set=:time, equipment=:equipment, name=:name where id=:id";
+	$statement = $db->prepare($query); 
+	$statement->bindValue(':intensity', $intensity);
+	$statement->bindValue(':bodyPart', $bodyPart);
+	$statement->bindValue(':time', $time);
+	$statement->bindValue(':equipment', $equipment);
+	$statement->bindValue(':name', $name);
+	$statement->bindValue(':id', $id);
+	$statement->bindValue(':username', $username);
+	$statement->execute();
+	$statement->closeCursor();
+}
+
+function deleteExercise($id)
+{
+	global $db;
+	$query = "delete from exercise where id=:id";
+	$statement = $db->prepare($query); 
+	$statement->bindValue(':id', $id);
+	$statement->execute();
+	$statement->closeCursor();
+}
+?>
+
 ?>

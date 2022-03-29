@@ -8,6 +8,7 @@ session_start();
 //echo $_SESSION['username'];
 
 $list_of_exercises = getAllExercises();
+$exercise_to_update = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -15,6 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         addExercise(NULL, $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
         $list_of_exercises = getAllExercises();
+    }
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
+    {  
+       
+      $exercise_to_update = getExercise_byId($_POST['exercise_to_update']);
+
+    }
+    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
+    {
+      deleteExercise($_POST['exercise_to_delete']);
+      $list_of_exercises = getAllExercises();
+    }
+
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Confirm update")
+    {
+      updateExercise($_POST['exercise_id'], $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
+      $list_of_exercises = getAllExercises();
     }
 
 }
@@ -96,26 +114,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <form name="exerciseForm" action="exercises.php" method="post">
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Exercise Name:
-                    <input type="text" class="form-control" name="exercise_name" required />
+                    <input type="text" class="form-control" name="exercise_name" required 
+                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['name'] ?>"/>
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Equipment:
-                    <input type="text" class="form-control" name="equipment" required />
+                    <input type="text" class="form-control" name="equipment" required
+                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['equipment'] ?>" />
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Time Per Set:
-                    <input type="text" class="form-control" name="time_per_set" required />
+                    <input type="text" class="form-control" name="time_per_set" required
+                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['time_per_set'] ?>" />
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Body Part:
-                    <input type="text" class="form-control" name="body_part" required />
+                    <input type="text" class="form-control" name="body_part" required
+                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['body_part'] ?>" />
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Intensity Factor:
-                    <input type="text" class="form-control" name="intensity_factor" required />
+                    <input type="text" class="form-control" name="intensity_factor" required
+                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['intensity_factor'] ?>" />
                 </div>
-                <input type="submit" value="Add" name="btnAction" class="btn btn-dark" style="margin: 15px" />
-                <hr style="margin: 15px">
+
+                <input type="hidden" name="exercise_id" required
+                value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['id'] ?>" />
+
+                <?php if ($exercise_to_update==null): ?>
+                    <input type="submit" value="Add" name="btnAction" class="btn btn-dark" style="margin: 15px" />
+                    <?php else: ?>
+                        <input type="submit" value="Confirm update" name="btnAction" class="btn btn-dark" 
+                    title="confirm update an exercise"  />  
+                    <?php endif ?> 
                 </form>
 
                 <hr/>
@@ -129,6 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <th >Time Per Set</th> 
     <th >Body Part</th>
     <th >Intensity Factor</th> 
+    <th >Update ?</th> 
+    <th >Delete ?</th> 
   </tr>
   </thead>
   <?php foreach ($list_of_exercises as $exercise):  ?>
@@ -138,6 +171,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <td><?php echo $exercise['time_per_set']; ?></td>
     <td><?php echo $exercise['body_part']; ?></td>
     <td><?php echo $exercise['intensity_factor']; ?></td>
+
+<td>
+    <?php if ($_SESSION['username'] == $exercise['username']): ?>
+    <form action="exercises.php" method="post">
+        <input type="submit" value="Update" name="btnAction" class="btn btn-primary" />
+        <input type="hidden" name="exercise_to_update" value="<?php echo $exercise['id'] ?>" />      
+      </form>
+      <?php else: ?>
+      <p> N/A </p>
+      <?php endif; ?>
+    </td>
+    <td>
+    <?php if ($_SESSION['username'] == $exercise['username']): ?>
+    <form action="exercises.php" method="post">
+        <input type="submit" value="Delete" name="btnAction" class="btn btn-danger" />
+        <input type="hidden" name="exercise_to_delete" value="<?php echo $exercise['id'] ?>" />      
+      </form>
+      <?php else: ?>
+      <p> N/A </p>
+        <?php endif; ?>
+    </td> 
   </tr>
   <?php endforeach; ?>
 
