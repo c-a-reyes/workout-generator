@@ -49,29 +49,57 @@ function loginUser($username, $password)
      $statement->closeCursor();
 }
 
-function addFriend($name,$major, $year)
+function addUserAsMember($username, $height, $weight, $goal)
 {
-	// db handler
-	global $db;
+    // db handler
+    global $db;
 
-	// write sql
-	// insert into friends values('someone', 'cs', 4)";
-	$query = "insert into friends values(:name, :major, :year)";
+    // write sql
+    // insert into friends values('someone', 'cs', 4)";
+    $query = "insert into member values(:username, :height, :weight, :goal)";
 
-	// execute the sql
-	//$statement = $db->query($query);   // query() will compile and execute the sql
-	$statement = $db->prepare($query); // only compiles
+    // execute the sql
+    //$statement = $db->query($query);   // query() will compile and execute the sql
+    $statement = $db->prepare($query); // only compiles
 
-	//fill in blanks, treat user input as plain string, this prevents sql injections
-	$statement->bindValue(':name', $name);
-	$statement->bindValue(':major', $major);
-	$statement->bindValue(':year', $year);
+    //fill in blanks, treat user input as plain string, this prevents sql injections
+    $statement->bindValue(':username', $username);
+    $statement->bindValue(':height', $height);
+    $statement->bindValue(':weight', $weight);
+    $statement->bindValue(':goal', $goal);
 
-	//now execute
-	$statement->execute();
 
-	// release; free the connection to the server so other sql statements may be issued 
-	$statement->closeCursor();
+    //now execute
+    $statement->execute();
+
+    // release; free the connection to the server so other sql statements may be issued 
+    $statement->closeCursor();
+}
+function addUserAsTrainer($username, $specialty, $experience, $certification)
+{
+    // db handler
+    global $db;
+
+    // write sql
+    // insert into friends values('someone', 'cs', 4)";
+    $query = "insert into trainer values(:username, :specialty, :experience, :certification)";
+
+    // execute the sql
+    //$statement = $db->query($query);   // query() will compile and execute the sql
+    $statement = $db->prepare($query); // only compiles
+
+    //fill in blanks, treat user input as plain string, this prevents sql injections
+    $statement->bindValue(':username', $username);
+    $statement->bindValue(':specialty', $specialty);
+    $statement->bindValue(':experience', $experience);
+    $statement->bindValue(':certification', $certification);
+
+
+    //now execute
+    $statement->execute();
+
+    // release; free the connection to the server so other sql statements may be issued 
+    $statement->closeCursor();
 }
 
 ?>

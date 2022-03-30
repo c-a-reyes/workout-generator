@@ -51,10 +51,13 @@
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
+        <div>
+            <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
+            <a class="nav-item mx-3" style="color: #f8f9fa; text-decoration: none" href="exercises.php">Exercises</a>
+        </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
-                Welcome, <?php echo $_SESSION["username"] ?>
+                Welcome, <?php echo $_SESSION["username"]?>
             </span>
             <a href="logout.php" class="navbar-item btn btn-outline-light">Logout</a>
         </div>
