@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <nav class="navbar navbar-dark bg-dark">
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
-            <a class="nav-item mx-3" style="color: #f8f9fa; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">

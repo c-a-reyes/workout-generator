@@ -3,20 +3,28 @@
     require('user-db.php');
 
     session_start();
+
+    $password = null;
+    $confirmPassword = null;
     
     if($_SERVER["REQUEST_METHOD"]=="POST")
     {
         if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Create")
         {
-            addUser($_POST['username'], $_POST['password'], $_POST['gym_address']);
-            if ($_POST['UserRadios'] == 'member') {
-                addUserAsMember($_POST['username'], $_POST['height'], $_POST['weight'], $_POST['goal'] );
+            $password = $_POST['password'];
+            $confirmPassword = $_POST['confirmPassword'];
+            if ($password == $confirmPassword)
+            {
+                addUser($_POST['username'], $_POST['password'], $_POST['gym_address']);
+                if ($_POST['UserRadios'] == 'member') {
+                    addUserAsMember($_POST['username'], $_POST['height'], $_POST['weight'], $_POST['goal'] );
+                }
+                if ($_POST['UserRadios'] == 'trainer') {
+                    addUserAsTrainer($_POST['username'], $_POST['specialty'], $_POST['experience'], $_POST['certification'] );
+                }
+                $_SESSION["username"]=$_POST['username'];
+                header("location:dashboard.php");
             }
-            if ($_POST['UserRadios'] == 'trainer') {
-                addUserAsTrainer($_POST['username'], $_POST['specialty'], $_POST['experience'], $_POST['certification'] );
-            }
-            $_SESSION["username"]=$_POST['username'];
-            header("location:dashboard.php");
         }
     }
 ?>
@@ -84,7 +92,7 @@
     <nav class="navbar navbar-dark bg-dark">
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
-            <a class="nav-item mx-3" style="color: #f8f9fa; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -92,6 +100,8 @@
             </span>
         </div>
     </nav>
+    <?php echo ($password != $confirmPassword) ? "<br> <center style='color: red; bottom: 0px'>Passwords do not match. Please try again.</center>" : ""; ?>
+
     <center>
         <div class="bg-light" style="width: 50%; border-radius: 15px; margin-top: 50px">
             <h1 style="padding-top: 30px">Create an Account.</h1>
@@ -103,6 +113,10 @@
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Password:
                     <input type="password" class="form-control" name="password" required />
+                </div>
+                <div class="row mb-3 mx-3" style="padding: 5px">
+                    Confirm Password:
+                    <input type="password" class="form-control" name="confirmPassword" required />
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 5px">
                     Gym Address:
@@ -164,6 +178,8 @@
                 <p>Returning user? Login <a href="login.php">here</a></p>
                 <br>
             </form>
+            <br>
+            <br>
         </div>
     </center>
 </body>
