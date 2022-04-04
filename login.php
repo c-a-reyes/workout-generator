@@ -5,15 +5,19 @@ require('user-db.php');
 
 session_start();
 
+$user = "placeholder";
+
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Login")
-    {
-        loginUser($_POST['username'], $_POST['password']);
-        $_SESSION["username"]=$_POST['username'];
-        header("location:dashboard.php");
+    {       
+            $user = loginUser($_POST['username'], $_POST['password']);
+            if ($user != NULL)
+            {
+                $_SESSION["username"]=$_POST['username'];
+                header("location:dashboard.php");     
+            }
     }
-
 }
 ?>
 
@@ -62,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     <nav class="navbar navbar-dark bg-dark">
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
-            <a class="nav-item mx-3" style="color: #f8f9fa; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -70,6 +74,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
             </span>
         </div>
     </nav>
+    <?php echo ($user == NULL) ? "<br> <center style='color: red; bottom: 0px'>Username or password incorrect. Please try again.</center>" : ""; ?>
     <center>
         <div class="bg-light" style="width: 50%; border-radius: 15px; margin-top: 50px">
             <h1 style="padding-top: 30px">Welcome to Workout Generator!</h1>
@@ -78,11 +83,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
                 <br>
                 <div class="row mx-3" style="padding: 15px">
                     Username:
-                    <input type="text" class="form-control" name="username" required />
+                    <input type="text" class="form-control" name="username" required minlength="3" maxlength="30" />
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 15px">
                     Password:
-                    <input type="password" class="form-control" name="password" required />
+                    <input type="password" class="form-control" name="password" />
                 </div>
                 <input type="submit" value="Login" name="btnAction" class="btn btn-dark" style="margin: 15px" />
             </form>
