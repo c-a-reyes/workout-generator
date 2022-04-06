@@ -30,6 +30,9 @@
     <!-- if you choose to use CDN for CSS bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
 
     <!-- you may also use W3's formats -->
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
@@ -52,7 +55,7 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div>
-            <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
+            <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
         </div>
         <div class="nav-item mx-3">
@@ -62,9 +65,49 @@
             <a href="logout.php" class="navbar-item btn btn-outline-light">Logout</a>
         </div>
     </nav>
-    <div class="container">
-        <br><br>
-        <p><a href="exercises.php">Add</a> an exercise</p>
+    <div id="main" class="px-4">
+        <div id="titleDiv" style="background-color: #">
+            <center>
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="154" fill="currentColor"
+                    class="bi bi-activity mt-3 mb-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
+                </svg>
+                <h1 class="display-4"">Workout Generator</h1>
+                <p class=" lead" style=" margin-left: 15%; margin-right: 15%; margin-top: 1%; font-size: 24px">Looking
+                    to put muscle
+                    on,
+                    slim down, or
+                    maintain your
+                    physique?
+                    With Workout Generator, you can find a workout plan
+                    that works for you so you can achieve all your fitness goals.</p>
+            </center>
+        </div>
+        <hr class="mt-5">
+        <div class="container-fluid text-center" style="padding-bottom: 30px; padding-top: 20px; background-color:">
+            <div class="row">
+                <div class="col pt-2 px-3">
+                    <a style="margin: 100px"><i class="bi-sliders" style="font-size: 75px"></i></a>
+                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Add or Search Exercises</h3>
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">placeholder text that will eventually be
+                        replaced by real text. Placeholder text that will be replaced.</p>
+                </div>
+                <div class="col pt-2 px-3">
+                    <a style="margin: 100px"><i class="bi-stack" style="font-size: 75px"></i></a>
+                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Build or View Workouts</h3>
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">placeholder text that will eventually be
+                        replaced by real text. Placeholder text that will be replaced.</p>
+                </div>
+                <div class="col pt-2 px-3">
+                    <a style="margin: 100px"><i class="bi-filetype-csv" style="font-size: 75px"></i></a>
+                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Export Workouts</h3>
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">placeholder text that will eventually be
+                        replaced by real text. Placeholder text that will be replaced.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
