@@ -45,12 +45,18 @@
     <!-- If you choose to use a favicon, specify the destination of the resource in href -->
     <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
 
+    <link rel="stylesheet" href="dashboard.css" type="text/css">
+
     <!-- if you choose to download bootstrap and host it locally -->
     <!-- <link rel="stylesheet" href="path-to-your-file/bootstrap.min.css" /> -->
 
     <!-- include your CSS -->
     <!-- <link rel="stylesheet" href="custom.css" />  -->
 </head>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -89,21 +95,23 @@
             <div class="row">
                 <div class="col pt-2 px-3">
                     <a style="margin: 100px"><i class="bi-sliders" style="font-size: 75px"></i></a>
-                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Add or Search Exercises</h3>
-                    <p class="lead" style="margin-top: 10px; font-size: 18px">placeholder text that will eventually be
-                        replaced by real text. Placeholder text that will be replaced.</p>
+                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Search or Add Exercises</h3>
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">Browse our collection of exercises. If you
+                        can't find one that suits your
+                        needs,
+                        add it to our collection!</p>
                 </div>
                 <div class="col pt-2 px-3">
                     <a style="margin: 100px"><i class="bi-stack" style="font-size: 75px"></i></a>
                     <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Build or View Workouts</h3>
-                    <p class="lead" style="margin-top: 10px; font-size: 18px">placeholder text that will eventually be
-                        replaced by real text. Placeholder text that will be replaced.</p>
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">Members can discover
+                        cardio or muscle-group specific workouts. Trainers can create workouts.</p>
                 </div>
                 <div class="col pt-2 px-3">
                     <a style="margin: 100px"><i class="bi-filetype-csv" style="font-size: 75px"></i></a>
                     <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Export Workouts</h3>
-                    <p class="lead" style="margin-top: 10px; font-size: 18px">placeholder text that will eventually be
-                        replaced by real text. Placeholder text that will be replaced.
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">If you find a workout you like,
+                        you can download it locally to take it with you on your next trip to the gym.
                     </p>
                 </div>
             </div>
