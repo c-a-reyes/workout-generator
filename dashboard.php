@@ -54,6 +54,7 @@
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="workouts.php">Workouts</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -62,9 +63,13 @@
             <a href="logout.php" class="navbar-item btn btn-outline-light">Logout</a>
         </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid">
         <br><br>
-        <p><a href="exercises.php">Add</a> an exercise</p>
+        <p style='text-align:center; font-size:5vw'><a href="exercises.php">Add</a> an exercise</p>
+        <p style='text-align:center; font-size:5vw'><a href="workouts.php">View</a> all workouts</p>
+    </div>
+    <div class="container-fluid">
+        <br><br>
     </div>
 </body>
 
