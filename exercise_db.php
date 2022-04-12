@@ -94,5 +94,3 @@ function deleteExercise($id)
 	$statement->closeCursor();
 }
 ?>
-
-?>
