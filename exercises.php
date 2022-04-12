@@ -62,6 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
     <!-- you may also use W3's formats -->
     <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
 
@@ -180,18 +191,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </td>
                 <td>
                     <?php if ($_SESSION['username'] == $exercise['username']): ?>
-                    <form action="exercises.php" method="post">
-                        <input type="submit" value="Delete" name="btnAction" class="btn btn-danger" />
-                        <input type="hidden" name="exercise_to_delete" value="<?php echo $exercise['id'] ?>" />
-                    </form>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal"
+                        data-target="#exampleModal">Delete</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this
+                                        exercise?
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <form action="exercises.php" method="post">
+                                        <input type="submit" value="Delete" name="btnAction" class="btn btn-danger" />
+                                        <input type="hidden" name="exercise_to_delete"
+                                            value="<?php echo $exercise['id'] ?>" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php else: ?>
                     <p> N/A </p>
                     <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
-
-
         </table>
     </div>
 </body>
