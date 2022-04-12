@@ -1,13 +1,13 @@
 <?php
 
 //creates a row in workout table, need separate command to add exercises to the contains table
-function addWorkout($workout_id, $workout_name, $total_time, $muscle_group, $equipment)
+function addWorkout($workout_id, $workout_name, $total_time, $muscle_group, $equipment, $username)
 {
 	// db handler
 	global $db;
 
 	// write sql
-	$query = "insert into workout values(NULL,'" . $workout_name . "'," . $total_time . ",'" . $muscle_group . ",'" . $equipment . "')";
+	$query = "insert into workout values(NULL,'" . $workout_name . "'," . $total_time . ",'" . $muscle_group . ",'" . $equipment . ",'" . $username . "')";
 
 	// execute the sql
 	$statement = $db->query($query);   // query() will compile and execute the sql

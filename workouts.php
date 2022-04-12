@@ -161,6 +161,7 @@ $workouts_to_update = null;
                     <th>Total Time</th>
                     <th>Muscle Group</th>
                     <th>Equipment</th>
+                    <th>Creator</th>
                     <th>Update ?</th>
                     <th>Delete ?</th>
                 </tr>
@@ -171,6 +172,7 @@ $workouts_to_update = null;
                 <td><?php echo $workout['total_time']; ?></td>
                 <td><?php echo $workout['muscle_group']; ?></td>
                 <td><?php echo $workout['equipment']; ?></td>
+                <td><?php echo $workout['username']; ?></td>
                 
                 <!-- missing a relation between workout and the trainer that made it -->
                 <!-- <td>

@@ -91,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="workouts.php">Workouts</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -141,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
 
             <input type="hidden" name="exercise_id" required
-                value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['id'] ?>" />
+                value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['exercise_id'] ?>" />
 
             <?php if ($exercise_to_update==null): ?>
             <input type="submit" value="Add" name="btnAction" class="btn btn-dark" style="margin: 15px" />
@@ -178,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <?php if ($_SESSION['username'] == $exercise['username']): ?>
                     <form action="exercises.php" method="post">
                         <input type="submit" value="Update" name="btnAction" class="btn btn-primary" />
-                        <input type="hidden" name="exercise_to_update" value="<?php echo $exercise['id'] ?>" />
+                        <input type="hidden" name="exercise_to_update" value="<?php echo $exercise['exercise_id'] ?>" />
                     </form>
                     <?php else: ?>
                     <p> N/A </p>
@@ -188,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <?php if ($_SESSION['username'] == $exercise['username']): ?>
                     <form action="exercises.php" method="post">
                         <input type="submit" value="Delete" name="btnAction" class="btn btn-danger" />
-                        <input type="hidden" name="exercise_to_delete" value="<?php echo $exercise['id'] ?>" />
+                        <input type="hidden" name="exercise_to_delete" value="<?php echo $exercise['exercise_id'] ?>" />
                     </form>
                     <?php else: ?>
                     <p> N/A </p>
