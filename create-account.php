@@ -94,11 +94,6 @@
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
         </div>
-        <div class="nav-item mx-3">
-            <span class="navbar-text mx-3">
-                Welcome
-            </span>
-        </div>
     </nav>
     <?php echo ($password != $confirmPassword) ? "<br> <center style='color: red; bottom: 0px'>Passwords do not match. Please try again.</center>" : ""; ?>
 

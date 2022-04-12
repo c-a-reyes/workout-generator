@@ -1,9 +1,13 @@
-<!-- this php code checks if the user is logged in, if they aren't it redirects them back to the login page. -->
 <?php
 require('connect-db.php');
 require('exercise_db.php');
 
 session_start();
+
+if(!isset($_SESSION["username"]))
+{
+    header("location:login.php");
+}
 
 //echo $_SESSION['username'];
 
@@ -18,33 +22,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $list_of_exercises = getAllExercises();
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
-    {  
-       
+    {   
       $exercise_to_update = getExercise_byId($_POST['exercise_to_update']);
-
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
     {
       deleteExercise($_POST['exercise_to_delete']);
       $list_of_exercises = getAllExercises();
     }
-
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Confirm update")
     {
       updateExercise($_POST['exercise_id'], $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
       $list_of_exercises = getAllExercises();
     }
-
 }
-    //session_start();
-
-
-    if(!isset($_SESSION["username"]))
-    {
-        header("location:login.php");
-    }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -89,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div>
-            <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
+            <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
         </div>
         <div class="nav-item mx-3">
@@ -126,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
             <div class="row mb-3 mx-3" style="padding: 5px">
                 Time Per Set:
-                <input type="text" class="form-control" name="time_per_set" required
+                <input type="number" class="form-control" name="time_per_set" required
                     value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['time_per_set'] ?>" />
             </div>
             <div class="row mb-3 mx-3" style="padding: 5px">
