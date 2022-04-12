@@ -201,6 +201,11 @@ $workouts_to_update = null;
 
         </table>
     </div>
+<!-- add something that makes it so only trainers can see below button -->
+    <div class="container">
+        <br><br>
+        <p style=><a href="create_workout.php">Create</a> a workout</p>
+    </div>
 </body>
 
 </html>
