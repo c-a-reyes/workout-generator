@@ -96,5 +96,3 @@ function deleteWorkout($id)
 	$statement->closeCursor();
 }
 ?>
-
-?>
