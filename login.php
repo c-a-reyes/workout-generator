@@ -72,7 +72,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     <?php echo ($user == NULL) ? "<br> <center style='color: red; bottom: 0px'>Username or password incorrect. Please try again.</center>" : ""; ?>
     <center>
         <div class="bg-light" style="width: 50%; border-radius: 15px; margin-top: 50px">
-            <h1 style="padding-top: 30px">Welcome to Workout Generator!</h1>
+            <h1 class="display-5" style="padding-top: 30px">Welcome to Workout Generator!</h1>
             <span>Login or create an account to get started.</span>
             <form name="mainForm" action="login.php" method="post">
                 <br>

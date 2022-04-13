@@ -22,6 +22,9 @@
                 if ($_POST['UserRadios'] == 'trainer') {
                     addUserAsTrainer($_POST['username'], $_POST['specialty'], $_POST['experience'], $_POST['certification'] );
                 }
+
+                addGym($_POST['gym_name'], $_POST['gym_address'], $_POST['gym_phone_number'], $_POST['gym_hours'], $_POST['gym_rate']);
+
                 $_SESSION["username"]=$_POST['username'];
                 header("location:dashboard.php");
             }
@@ -98,25 +101,58 @@
     <?php echo ($password != $confirmPassword) ? "<br> <center style='color: red; bottom: 0px'>Passwords do not match. Please try again.</center>" : ""; ?>
 
     <center>
-        <div class="bg-light" style="width: 50%; border-radius: 15px; margin-top: 50px">
-            <h1 style="padding-top: 30px">Create an Account.</h1>
+        <div class="bg-light" style="width: 75%; border-radius: 15px; margin-top: 50px; margin-bottom: 50px">
+            <h1 style="padding-top: 30px" class="display-4">Create an Account.</h1>
+            <br>
             <form name="mainForm" action="create-account.php" method="post">
-                <div class="row mb-3 mx-3" style="padding: 5px">
-                    Username:
-                    <input type="text" class="form-control" name="username" required />
+                <div id="userInfo">
+                    <div class="mx-3">
+                        <div class="row mb-3 mx-3" style="padding: 5px">
+                            Username:
+                            <input type="text" class="form-control" name="username" required />
+                        </div>
+                    </div>
+                    <div class="row mx-3">
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Password:
+                            <input type="password" class="form-control" name="password" required />
+                        </div>
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Confirm Password:
+                            <input type="password" class="form-control" name="confirmPassword" required />
+                        </div>
+                    </div>
                 </div>
-                <div class="row mb-3 mx-3" style="padding: 5px">
-                    Password:
-                    <input type="password" class="form-control" name="password" required />
+                <br>
+                <br>
+                <br>
+                <div id="gymInfo">
+                    <div class="row mx-3">
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Gym Name:
+                            <input type="text" class="form-control" name="gym_name" required />
+                        </div>
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Gym Address:
+                            <input type="text" class="form-control" name="gym_address" required />
+                        </div>
+                    </div>
+                    <div class="row mx-3">
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Gym Phone Number:
+                            <input type="text" class="form-control" name="gym_phone_number" required />
+                        </div>
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Gym Hours:
+                            <input type="text" class="form-control" name="gym_hours" required />
+                        </div>
+                        <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
+                            Gym Rate:
+                            <input type="number" class="form-control" name="gym_rate" required />
+                        </div>
+                    </div>
                 </div>
-                <div class="row mb-3 mx-3" style="padding: 5px">
-                    Confirm Password:
-                    <input type="password" class="form-control" name="confirmPassword" required />
-                </div>
-                <div class="row mb-3 mx-3" style="padding: 5px">
-                    Gym Address:
-                    <input type="text" class="form-control" name="gym_address" required />
-                </div>
+                <br>
                 <br>
                 <div id="MemberTrainerFunc">
                     <div>
