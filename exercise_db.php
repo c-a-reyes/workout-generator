@@ -8,8 +8,11 @@ function addExercise($exercise_id, $username, $intensity, $bodyPart, $time, $equ
 	// write sql
 	$query = "insert into exercise values(NULL,'" . $username . "'," . $intensity . ",'" . $bodyPart . "'," . $time . ",'" . $equipment . "','" . $name  . "')";
 
-	// execute the sql
-	$statement = $db->query($query);   // query() will compile and execute the sql
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->execute();
 	
 	// release; free the connection to the server so other sql statements may be issued 
 	$statement->closeCursor();
