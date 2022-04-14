@@ -78,11 +78,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
                 <br>
                 <div class="row mx-3" style="padding: 15px">
                     Username:
-                    <input type="text" class="form-control" name="username" required minlength="3" maxlength="30" />
+                    <input placeholder="Enter username" type="text" class="form-control" name="username" required />
                 </div>
                 <div class="row mb-3 mx-3" style="padding: 15px">
                     Password:
-                    <input type="password" class="form-control" name="password" />
+                    <input placeholder="Enter password" type="password" class="form-control" name="password" required />
                 </div>
                 <input type="submit" value="Login" name="btnAction" class="btn btn-dark" style="margin: 15px" />
             </form>
