@@ -123,30 +123,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <form name="exerciseForm" action="exercises.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Exercise Name:
-                <input type="text" class="form-control" name="exercise_name" required
+                <input placeholder="Enter exercise name" aria-describedby="nameHelp" type="text" class="form-control"
+                    name="exercise_name" required
                     value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['name'] ?>" />
+                <small id="nameHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">e.g.
+                    Barbell Squat
+                </small>
             </div>
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Equipment:
-                <input type="text" class="form-control" name="equipment" required
+                <input placeholder="Enter equipment" aria-describedby="equipmentHelp" type="text" class="form-control"
+                    name="equipment" required
                     value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['equipment'] ?>" />
-            </div>
-            <div class="row mb-3 mx-2" style="padding: 5px">
-                Time Per Set:
-                <input type="number" class="form-control" name="time_per_set" required
-                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['time_per_set'] ?>" />
+                <small id="equipmentHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">Enter
+                    your equipment in a comma-separated list. If
+                    your exercise requires no equipment, enter None.
+                </small>
             </div>
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Body Part(s):
-                <input type="text" class="form-control" name="body_part" required
+                <input placeholder="Enter body part(s)" aria-describedby="bodypartHelp" type="text" class="form-control"
+                    name="body_part" required
                     value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['body_part'] ?>" />
+                <small id="bodypartHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">e.g.
+                    Chest, Shoulders, Triceps or Full Body
+                </small>
             </div>
-            <div class="row mb-3 mx-2" style="padding: 5px">
-                Intensity Factor:
-                <input type="number" class="form-control" name="intensity_factor" required
-                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['intensity_factor'] ?>" />
-            </div>
+            <div class="row mb-3 mx-2">
 
+                <div class="col" style="padding: 5px">
+                    Time Per Set:
+                    <div class="input-group">
+                        <div>
+                            <input placeholder="Enter time per set" aria-describedby="timeHelp" style="width: 543px"
+                                type="number" class="form-control" name="time_per_set" required
+                                value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['time_per_set'] ?>" />
+                            <small id="timeHelp" class="form-text text-muted"
+                                style="text-align: left; padding-left: 0px">The time it takes to complete one set of
+                                this exercise.
+                            </small>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">seconds</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="padding: 5px">
+                    Intensity Factor:
+                    <input placeholder="Enter intensity factor" aria-describedby="ifHelp" type="number"
+                        class="form-control" name="intensity_factor" required min="1" max="5"
+                        value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['intensity_factor'] ?>" />
+                    <small id="ifHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">Rate the
+                        intensity of your exercise from 1-5.
+                    </small>
+                </div>
+            </div>
             <input type="hidden" name="exercise_id" required
                 value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['exercise_id'] ?>" />
 
@@ -158,7 +189,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <a href="exercises.php" class="btn btn-secondary my-2 px-3">Cancel</a>
             <?php endif ?>
         </form>
-
         <hr />
         <br>
         <h2 class="display-5">Our Exercises</h2>

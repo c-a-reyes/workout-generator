@@ -6,12 +6,19 @@ function addExercise($exercise_id, $username, $intensity, $bodyPart, $time, $equ
 	global $db;
 
 	// write sql
-	$query = "insert into exercise values(NULL,'" . $username . "'," . $intensity . ",'" . $bodyPart . "'," . $time . ",'" . $equipment . "','" . $name  . "')";
+	$query = "insert into exercise values(NULL,:username, :intensity, :bodyPart, :time, :equipment, :name)";
 
 	// 1. prepare
 	// 2. bindValue & execute
 	$statement = $db->prepare($query);
-	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->bindValue(':username', $username);
+	$statement->bindValue(':intensity', $intensity);
+	$statement->bindValue(':bodyPart', $bodyPart);
+	$statement->bindValue(':time', $time);
+	$statement->bindValue(':equipment', $equipment);
+	$statement->bindValue(':name', $name);
+
+
 	$statement->execute();
 	
 	// release; free the connection to the server so other sql statements may be issued 
