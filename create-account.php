@@ -129,26 +129,31 @@
                 <div id="gymInfo">
                     <div class="row mx-3">
                         <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
-                            Gym Name:
+                            Gym Name: <br>
+                            (e.g. Planet Fitness)
                             <input type="text" class="form-control" name="gym_name" required />
                         </div>
                         <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
-                            Gym Address:
+                            Gym Address: <br>
+                            (e.g. 100 Main St, Charlottesville, VA, 22903)
                             <input type="text" class="form-control" name="gym_address" required />
                         </div>
                     </div>
                     <div class="row mx-3">
                         <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
-                            Gym Phone Number:
+                            Gym Phone Number: <br>
+                            (e.g. ###-###-####)
                             <input type="text" class="form-control" name="gym_phone_number" required />
                         </div>
                         <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
-                            Gym Hours:
+                            Gym Hours: <br>
+                            (e.g. 6am-11pm)
                             <input type="text" class="form-control" name="gym_hours" required />
                         </div>
                         <div class="col mb-3 mx-3" style="padding: 5px; text-align: left">
-                            Gym Rate:
-                            <input type="number" class="form-control" name="gym_rate" required />
+                            Monthly Gym Rate: <br>
+                            (e.g. 50)
+                            <input type="number" class="form-control" name="gym_rate" required /> $/month
                         </div>
                     </div>
                 </div>
@@ -174,29 +179,29 @@
                         </div>
                         <div id="memberInfo" style="display:none">
                             <div class="row mb-3 mx-3" style="padding: 5px">
-                                Height:
+                                Height: (inches, e.g. '65' for 5 ft 5 in)
                                 <input id="hite" type="number" class="form-control" name="height" required />
                             </div>
                             <div class="row mb-3 mx-3" style="padding: 5px">
-                                Weight:
+                                Weight: (pounds)
                                 <input id="wate" type="number" class="form-control" name="weight" required />
                             </div>
                             <div class="row mb-3 mx-3" style="padding: 5px">
-                                Goal:
+                                Goal: (describe briefly)
                                 <input id="gole" type="text" class="form-control" name="goal" required />
                             </div>
                         </div>
                         <div id="trainerInfo" style="display:none">
                             <div class="row mb-3 mx-3" style="padding: 5px">
-                                Specialty:
+                                Specialty (e.g. bodybuilding, crossfit, etc.):
                                 <input id="specs" type="text" class="form-control" name="specialty" required />
                             </div>
                             <div class="row mb-3 mx-3" style="padding: 5px">
-                                Experience:
+                                Experience (number of years):
                                 <input id="exp" type="number" class="form-control" name="experience" required />
                             </div>
                             <div class="row mb-3 mx-3" style="padding: 5px">
-                                Certifications:
+                                Certifications (e.g. NASM or CrossFit L3):
                                 <input id="certs" type="text" class="form-control" name="certifications" required />
                             </div>
                         </div>
