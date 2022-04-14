@@ -1,0 +1,37 @@
+    <?php foreach ($list_of_workouts as $workout):  ?> 
+              
+        <div class="row">
+        <div class="col-md-4 col-sm-6 pb-4">
+            <div class="card h-100">
+            <div class="card-deck">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"> <?php echo $workout['workout_name']; ?> </h5>
+      <p class="card-text">
+      Total Time: <?php echo $workout['total_time']; ?>
+        </p>
+        <p class="card-text">
+      Muscle Group: <?php echo $workout['muscle_group']; ?>
+        </p>
+        <p class="card-text">
+      Equipment: <?php echo $workout['equipment']; ?></p>
+      <p class="card-text">
+      Created by: <?php echo $workout['username']; ?></p>
+
+      <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <div class="card card-body">
+      <?php foreach ($list_of_exercises as $exercise):  ?>
+        <?php echo $exercise['name']; ?>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  </div>
+  </div>
+  </div>
+
+
+</div>
+<?php endforeach; ?>

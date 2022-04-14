@@ -28,6 +28,7 @@ function getAllWorkouts()
 	$statement->closeCursor();
 
 	return $results;
+	echo "hi";
 }
 
 function getWorkout_byId($workout_id)
@@ -86,13 +87,54 @@ function getWorkout_byId($workout_id)
 // }
 
 // deletes row from workout table, also need to account for contains table
-function deleteWorkout($id)
+function deleteWorkout($workout_id)
 {
 	global $db;
-	$query = "delete from exercise where id=:id";
+	$query = "delete from workout where workout_id=:workout_id";
 	$statement = $db->prepare($query); 
-	$statement->bindValue(':id', $id);
+	$statement->bindValue(':workout_id', $workout_id);
 	$statement->execute();
 	$statement->closeCursor();
+}
+
+function getWorkoutByExerciseId($exerciseID){
+	global $db;
+	$query = "select workoutID from contains where exerciseID = :exerciseID";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exerciseID', $exerciseID);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;
+
+}
+
+function getExerciseByWorkoutId($workoutID)
+{
+	global $db;
+	$query = "select exerciseID from contains where workoutID = :workoutID";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':workoutID', $workoutID);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetchAll();   
+
+	$statement->closeCursor();
+
+
+	return $results;	
 }
 ?>
