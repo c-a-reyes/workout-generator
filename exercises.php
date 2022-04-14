@@ -1,6 +1,7 @@
 <?php
 require('connect-db.php');
 require('exercise_db.php');
+require('workout_db.php');
 
 session_start();
 
@@ -10,6 +11,8 @@ if(!isset($_SESSION["username"]))
 }
 
 //echo $_SESSION['username'];
+
+$trainer = trainerCheck($_SESSION['username']);
 
 $list_of_exercises = getAllExercises();
 $exercise_to_update = null;
@@ -191,7 +194,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </form>
         <hr />
         <br>
-        <h2 class="display-5">Our Exercises</h2>
+        <div class="row">
+            <span class="col display-5">Our Exercises</span>
+            <?php echo ($trainer != NULL) ? 
+            "<a href='create_workout.php' class='col col-lg-2 btn btn-dark mx-3' style='font-size: 20px'>
+                <i class='bi-wrench-adjustable' style='font-size: 25px'></i>
+                 Create a Workout
+             </a>"
+              : 
+            "<button  disabled class='btn btn-dark mx-3' style='font-size: 20px; width: 270px'>
+                    <i class='bi-wrench-adjustable' style='font-size: 25px'></i> 
+                    Create a Workout
+             </button> 
+             <small class='text-muted' style='text-align: right'>You must be a trainer to create a workout.</small>
+            "; ?>
+
+
+        </div>
         <br>
         <center>
             <div class="table-responsive">
