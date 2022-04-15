@@ -99,8 +99,8 @@
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
     </nav>
-    <?php echo ($password != $confirmPassword) ? "<br> <center style='color: red; bottom: 0px'>Passwords do not match. Please try again.</center>" : ""; ?>
-
+    <?php echo ($password != $confirmPassword) ? "<div class='alert alert-danger' role='alert'>
+ Passwords do not match. Please try again.</div><br>" : ""; ?>
     <center>
         <div class="bg-light" style="width: 75%; border-radius: 15px; margin-top: 50px; margin-bottom: 50px">
             <h1 style="padding-top: 30px" class="display-4">Create an Account.</h1>

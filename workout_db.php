@@ -85,6 +85,45 @@ function getWorkout_byId($workout_id)
 	return $results;	
 }
 
+function getExerciseIdByWorkoutId($workout_id)
+{
+	global $db;
+	$query = "select * from contains where workout_id = :workout_id";
+	// "select * from exercise where name = $name";
+	
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetchAll();   
+
+	$statement->closeCursor();
+
+	return $results;	
+}
+
+function getExerciseNameByExerciseId($exercise_id)
+{
+	global $db;
+	$query = "select name from exercise where exercise_id = :exercise_id";
+	// "select * from exercise where name = $name";
+	
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;	
+}
 
 function updateWorkout($workout_id, $workout_name, $total_time, $muscle_group, $equipment, $username)
 {

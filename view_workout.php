@@ -130,10 +130,11 @@ $workout_to_update = null;
                 <table class="lead table table-striped table-hover table-light">
                     <thead>
                         <tr>
+                            <th scope="col">Details</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Equipment</th>
+                            <!-- <th scope="col">Equipment</th> -->
                             <th scope="col">Muscle Group</th>
-                            <th scope="col">Time</th>
+                            <!-- <th scope="col">Time</th> -->
                             <th scope="col">Creator:</th>
                             <th scope="col">Update</th>
                             <th scope="col">Delete</th>
@@ -141,19 +142,104 @@ $workout_to_update = null;
                     </thead>
                     <?php foreach ($list_of_workouts as $workout):  ?>
                     <tr>
-                        <th scope="col"><?php echo $workout['workout_name']; ?>
-                            <!-- <div class="collapse"
-                                id="collapseExample">
-                                <div class="card card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                    richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
-                                    cred nesciunt sapiente ea proident.
+                        <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-dark" data-toggle="modal"
+                                data-target="#viewModal<?php echo $workout['workout_id'] ?>"><i
+                                    class="bi-info-circle"></i></button>
+
+                        </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="viewModal<?php echo $workout['workout_id'] ?>" tabindex="-1"
+                            role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title display-6" id="viewModalLabel">
+                                            <?php echo $workout['username']?>'s
+                                            <?php echo $workout['workout_name']?>
+                                        </h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <br>
+                                        <ul class="list-group">
+                                            <li class="list-group-item"
+                                                style="background-color: rgb(10, 55, 146); border-radius: 5px">
+                                                <button class="lead btn btn-link"
+                                                    style="color: #fff; text-decoration: none;" type="button"
+                                                    data-toggle="collapse" data-target="#collapseExample1"
+                                                    aria-expanded="false" aria-controls="collapseExample1">
+                                                    Total Time
+                                                </button>
+                                                <div class="collapse" id="collapseExample1">
+                                                    <div class="card card-body">
+                                                        <?php echo $workout['total_time']; ?> minutes
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <br>
+                                            <li class="list-group-item"
+                                                style="background-color: rgb(10, 55, 146); border-radius: 5px">
+                                                <button class="lead btn btn-link"
+                                                    style="color: #fff; text-decoration: none;" type="button"
+                                                    data-toggle="collapse" data-target="#collapseExample2"
+                                                    aria-expanded="false" aria-controls="collapseExample2">
+                                                    Equipment
+                                                </button>
+                                                <div class="collapse" id="collapseExample2">
+                                                    <div class="card card-body">
+                                                        <?php echo $workout['equipment']; ?>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <br>
+                                            <li class="list-group-item"
+                                                style="background-color: rgb(10, 55, 146); border-radius: 5px">
+                                                <button class="lead btn btn-link"
+                                                    style="color: #fff; text-decoration: none;" type="button"
+                                                    data-toggle="collapse" data-target="#collapseExample3"
+                                                    aria-expanded="false" aria-controls="collapseExample3">
+                                                    Exercises
+                                                </button>
+                                                <div class="collapse" id="collapseExample3">
+                                                    <div class="card card-body">
+                                                        <?php $exercises_per_workouts = getExerciseIdByWorkoutId($workout['workout_id']); ?>
+                                                        <?php if ($exercises_per_workouts != null): ?>
+                                                        <?php foreach ($exercises_per_workouts as $exercise_ids): ?>
+                                                        <?php $exercise = getExerciseNameByExerciseId($exercise_ids['exercise_id']); ?>
+                                                        <ul>
+                                                            <li style="list-style-type: disc">
+                                                                <span
+                                                                    style="float: left"><?php echo $exercise['name']; ?>,
+                                                                    metrics</span>
+                                                            </li>
+                                                        </ul>
+                                                        <?php endforeach; ?>
+                                                        <?php else: ?>
+                                                        This workout currently has no
+                                                        exercises. Add exercises to it by clicking on the Create
+                                                        a
+                                                        Workout
+                                                        button above.
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
-                            </div> -->
-                        </th>
-                        <td><?php echo $workout['equipment']; ?></td>
+                            </div>
+                        </div>
+                        <th scope="col"><?php echo $workout['workout_name']; ?></th>
                         <td><?php echo $workout['muscle_group']; ?></td>
-                        <td><?php echo $workout['total_time']; ?></td>
                         <td><?php echo $workout['username']; ?></td>
 
                         <td>

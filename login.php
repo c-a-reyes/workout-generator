@@ -70,7 +70,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
     </nav>
-    <?php echo ($user == NULL) ? "<br> <center style='color: red; bottom: 0px'>Username or password incorrect. Please try again.</center>" : ""; ?>
+
+    <?php echo ($user == NULL) ? "<div class='alert alert-danger' role='alert'>
+ Username or password incorrect. Please try again.</div><br>" : ""; ?>
     <center>
         <div class="bg-light" style="width: 50%; border-radius: 15px; margin-top: 50px">
             <h1 class="display-5" style="padding-top: 30px">Welcome to Workout Generator!</h1>
