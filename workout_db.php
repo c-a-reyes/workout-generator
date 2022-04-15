@@ -110,4 +110,26 @@ function deleteWorkout($workout_id)
 	$statement->execute();
 	$statement->closeCursor();
 }
+
+function addExercisesToWorkout($exercise_id, $workout_id)
+{
+	global $db;
+	$query = "insert into contains values(:exercise_id, :workout_id)";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;
+}
+
 ?>

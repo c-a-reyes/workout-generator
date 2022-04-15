@@ -1,6 +1,7 @@
 <?php
 require('connect-db.php');
 require('workout_db.php');
+require('exercise_db.php');
 
 session_start();
 
@@ -12,6 +13,7 @@ if(!isset($_SESSION["username"]))
 
 $list_of_workouts = getAllWorkouts();
 $workout_to_update = null;
+$list_of_exercises = getAllExercises();
 
  if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
@@ -33,6 +35,12 @@ $workout_to_update = null;
         {
           updateWorkout($_POST['workout_id'], $_POST['workout_name'], $_POST['total_time'], $_POST['muscle_group'], $_POST['equipment'], $_SESSION['username']);
           $list_of_workouts = getAllWorkouts();
+        }
+        if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add these exercises")
+        {
+            foreach ($v as $_POST['invite']){
+            addExercisesToWorkout($v, $_POST['workout-dropdown']);
+            }
         }
     }
 
@@ -178,51 +186,50 @@ $workout_to_update = null;
             <a href="create_workout.php" class="btn btn-secondary my-2 px-3">Cancel</a>
             <?php endif ?>
         </form>
+        <form method="post">
+
         <br>
         <hr>
         <h1 class="display-2" style="padding-top: 30px">Add Exercises to a Workout.</h1>
-        <select class="form-select" aria-label="Default select example">
+        <select name ="workout-dropdown" class="form-select" aria-label="Default select example">
             <option selected>Choose workout to add exercises to</option>
                 <?php foreach ($list_of_workouts as $workout):  ?>
             <option value=<?php $workout['workout_id']?> ><?php echo $workout['workout_name']; ?></option>
             <?php endforeach; ?>
         </select>
         <center>
-            <div class="table-responsive">
+ <div class="table-responsive">
                 <table class="table table-striped table-hover table-light">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
+                            <th scope=" col">Name</th>
                             <th scope="col">Equipment</th>
-                            <th scope="col">Muscle Group</th>
-                            <th scope="col">Total Time</th>
-                            <th scope="col">Created By:</th>
+                            <th scope="col">Time Per Set</th>
+                            <th scope="col">Body Part(s)</th>
+                            <th scope="col">Intensity Factor</th>
                             <th scope="col">Add</th>
                         </tr>
                     </thead>
-                    <?php foreach ($list_of_workouts as $workout):  ?>
+    <div class="form-check">
+                    <?php foreach ($list_of_exercises as $exercise):  ?>
                     <tr>
-                        <th scope="col"><?php echo $workout['workout_name']; ?></td>
-                        <td><?php echo $workout['equipment']; ?></td>
-                        <td><?php echo $workout['muscle_group']; ?></td>
-                        <td><?php echo $workout['total_time']; ?> minutes</td>
-                        <td><?php echo $workout['username']; ?></td>
+                        <th scope="col"><?php echo $exercise['name']; ?></td>
+                        <td><?php echo $exercise['equipment']; ?></td>
+                        <td><?php echo $exercise['time_per_set']; ?></td>
+                        <td><?php echo $exercise['body_part']; ?></td>
+                        <td><?php echo $exercise['intensity_factor']; ?></td>
 
                         <td>
-<button type="button" class="btn btn-danger">Add</button>
-<script type="text/javascript">
-
-        $(document).on('click', ':button', function (e) {
-
-            var btn = $(e.target);
-            btn.attr("disabled", "disabled"); // disable button
-        });
-
-</script>
+   <input id=<?php echo $exercise['exercise_id']?> value=<?php echo $exercise['exercise_id']?>  name="invite[]" type="checkbox">
+    
+  </label>
+</div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                 </table>
+<button type="submit" class="btn btn-dark" name="btnAction">Add these exercises</button>
+                    </form>
             </div>
         </center>
     </div>
