@@ -67,6 +67,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
     </nav>
     <?php echo ($user == NULL) ? "<br> <center style='color: red; bottom: 0px'>Username or password incorrect. Please try again.</center>" : ""; ?>

@@ -96,6 +96,7 @@
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Workout Generator</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
     </nav>
     <?php echo ($password != $confirmPassword) ? "<br> <center style='color: red; bottom: 0px'>Passwords do not match. Please try again.</center>" : ""; ?>
@@ -257,10 +258,18 @@
                                 <div class="row mb-3 mx-3" style="padding: 5px">
                                     Experience:
                                     <div class="input-group px-0">
-                                        <input placeholder="Enter experience" aria-describedby="expHelp" id="exp"
-                                            type="number" class="form-control" name="experience" required />
+                                        <div class="col">
+                                            <input placeholder="Enter experience" aria-describedby="expHelp" id="exp"
+                                                type="number" class="form-control" name="experience" min="1" required />
+                                            <small id="expHelp" style="padding-left: 0px; float: left"
+                                                class="form-text text-muted">You
+                                                must
+                                                have at least one year of experience
+                                                to become a trainer.
+                                            </small>
+                                        </div>
                                         <div class="input-group-append">
-                                            <span id="expHelp" class="input-group-text">years</span>
+                                            <span class="input-group-text">years</span>
                                         </div>
                                     </div>
                                 </div>
