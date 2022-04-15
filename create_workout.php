@@ -1,6 +1,5 @@
 <?php
 require('connect-db.php');
-require('exercise_db.php');
 require('workout_db.php');
 
 session_start();
@@ -10,37 +9,36 @@ if(!isset($_SESSION["username"]))
     header("location:login.php");
 }
 
-//echo $_SESSION['username'];
 
-$trainer = trainerCheck($_SESSION['username']);
+$list_of_workouts = getAllWorkouts();
+$workout_to_update = null;
 
-$list_of_exercises = getAllExercises();
-$exercise_to_update = null;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add")
+ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        addExercise(NULL, $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
-        $list_of_exercises = getAllExercises();
+        if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Create")
+        {
+            createWorkout(NULL, $_POST['workout_name'], $_POST['total_time'], $_POST['muscle_group'], $_POST['equipment'], $_SESSION['username']);
+            $list_of_workouts = getAllWorkouts();
+        }
+        else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
+        {   
+          $workout_to_update = getWorkout_byId($_POST['workout_to_update']);
+        }
+        else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
+        {
+          deleteWorkout($_POST['workout_to_delete']);
+          $list_of_workouts = getAllWorkouts();
+        }
+        if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Confirm Update")
+        {
+          updateWorkout($_POST['workout_id'], $_POST['workout_name'], $_POST['total_time'], $_POST['muscle_group'], $_POST['equipment'], $_SESSION['username']);
+          $list_of_workouts = getAllWorkouts();
+        }
     }
-    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
-    {   
-      $exercise_to_update = getExercise_byId($_POST['exercise_to_update']);
-    }
-    else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
-    {
-      deleteExercise($_POST['exercise_to_delete']);
-      $list_of_exercises = getAllExercises();
-    }
-    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Confirm Update")
-    {
-      updateExercise($_POST['exercise_id'], $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
-      $list_of_exercises = getAllExercises();
-    }
-}
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -110,132 +108,103 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </div>
     </nav>
     <div class="container">
-        <input id="searchBar" type="text" placeholder="Search for an exercise">
-        <style type="text/css">
-        #searchBar {
-            float: center;
-            padding: 6px;
-            margin-top: 8px;
-            margin-right: px;
-            font-size: 20px;
-        }
-        </style>
-        <p>Search criteria would go here once we integrate it</p>
-        <hr>
-        <h1 class="display-2">Add an Exercise.</h1>
-        <form name="exerciseForm" action="exercises.php" method="post">
+        <h1 class="display-2" style="padding-top: 30px">Create a Workout.</h1>
+        <form name="workoutForm" action="create_workout.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
-                Exercise Name:
-                <input placeholder="Enter exercise name" aria-describedby="nameHelp" type="text" class="form-control"
-                    name="exercise_name" required
-                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['name'] ?>" />
+                Workout Name:
+                <input placeholder="Enter workout name" aria-describedby="nameHelp" type="text" class="form-control"
+                    name="workout_name" required
+                    value="<?php if ($workout_to_update!=null) echo $workout_to_update['workout_name'] ?>" />
                 <small id="nameHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">e.g.
-                    Barbell Squat
+                    Upper Body Destroyer Workout
                 </small>
             </div>
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Equipment:
                 <input placeholder="Enter equipment" aria-describedby="equipmentHelp" type="text" class="form-control"
                     name="equipment" required
-                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['equipment'] ?>" />
+                    value="<?php if ($workout_to_update!=null) echo $workout_to_update['equipment'] ?>" />
                 <small id="equipmentHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">Enter
                     your equipment in a comma-separated list. If
-                    your exercise requires no equipment, enter None.
+                    your workout requires no equipment, enter None.
                 </small>
             </div>
             <div class="row mb-3 mx-2" style="padding: 5px">
-                Body Part(s):
-                <input placeholder="Enter body part(s)" aria-describedby="bodypartHelp" type="text" class="form-control"
-                    name="body_part" required
-                    value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['body_part'] ?>" />
+                Muscle Group(s):
+                <input placeholder="Enter muscle group(s)" aria-describedby="bodypartHelp" type="text"
+                    class="form-control" name="muscle_group" required
+                    value="<?php if ($workout_to_update!=null) echo $workout_to_update['muscle_group'] ?>" />
                 <small id="bodypartHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">e.g.
-                    Chest, Shoulders, Triceps or Full Body
+                    Push, Pull, Legs, Full Body
                 </small>
             </div>
             <div class="row mb-3 mx-2">
 
                 <div class="col" style="padding: 5px">
-                    Time Per Set:
+                    Total Time:
                     <div class="input-group">
                         <div>
-                            <input placeholder="Enter time per set" aria-describedby="timeHelp" style="width: 543px"
-                                type="number" class="form-control" name="time_per_set" required
-                                value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['time_per_set'] ?>" />
+                            <input placeholder="Enter total time" aria-describedby="timeHelp" style="width: 543px"
+                                type="number" class="form-control" name="total_time" required
+                                value="<?php if ($workout_to_update!=null) echo $workout_to_update['total_time'] ?>" />
                             <small id="timeHelp" class="form-text text-muted"
-                                style="text-align: left; padding-left: 0px">The time it takes to complete one set of
-                                this exercise.
+                                style="text-align: left; padding-left: 0px">The time it takes to complete the entire
+                                workout.
                             </small>
                         </div>
                         <div class="input-group-append">
-                            <span class="input-group-text">seconds</span>
+                            <span class="input-group-text">minutes</span>
                         </div>
                     </div>
                 </div>
                 <div class="col" style="padding: 5px">
-                    Intensity Factor:
-                    <input placeholder="Enter intensity factor" aria-describedby="ifHelp" type="number"
-                        class="form-control" name="intensity_factor" required min="1" max="5"
-                        value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['intensity_factor'] ?>" />
-                    <small id="ifHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">Rate the
-                        intensity of your exercise from 1-5.
+                    Created by:
+                    <input placeholder="<?php echo $_SESSION['username']?>" aria-describedby="ifHelp" type="text"
+                        class="form-control" name="username"
+                        value="<?php if ($workout_to_update!=null) echo $workout_to_update['username'] ?>" />
+                    <small id="ifHelp" class="form-text text-muted" style="text-align: left; padding-left: 0px">Enter
+                        your username so others can see that this workout is yours.
                     </small>
                 </div>
             </div>
-            <input type="hidden" name="exercise_id" required
-                value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['exercise_id'] ?>" />
+            <input type="hidden" name="workout_id" required
+                value="<?php if ($workout_to_update!=null) echo $workout_to_update['workout_id'] ?>" />
 
-            <?php if ($exercise_to_update==null): ?>
-            <input type="submit" value="Add" name="btnAction" class="btn btn-dark mx-3 my-2 px-3" />
+            <?php if ($workout_to_update==null): ?>
+            <input type="submit" value="Create" name="btnAction" class="btn btn-dark mx-3 my-2 px-3" />
             <?php else: ?>
             <input type="submit" value="Confirm Update" name="btnAction" class="btn btn-success mx-3 my-2 px-3"
-                title="confirm update on exercise" />
-            <a href="exercises.php" class="btn btn-secondary my-2 px-3">Cancel</a>
+                title="confirm update on workout" />
+            <a href="create_workout.php" class="btn btn-secondary my-2 px-3">Cancel</a>
             <?php endif ?>
         </form>
-        <hr />
         <br>
-        <div class="row">
-            <span class="col display-5">Our Exercises</span>
-            <?php echo ($trainer != NULL) ? 
-            "<a href='create_workout.php' class='col col-lg-2 btn btn-dark mx-3' style='font-size: 20px'>
-                <i class='bi-wrench-adjustable' style='font-size: 25px'></i>
-                 Create a Workout
-             </a>"
-              : 
-            "<button  disabled class='btn btn-dark mx-3' style='font-size: 20px; width: 270px'>
-                    <i class='bi-wrench-adjustable' style='font-size: 25px'></i> 
-                    Create a Workout
-             </button> 
-             <small class='text-muted' style='text-align: right'>You must be a trainer to create a workout.</small>
-            "; ?>
-
-
-        </div>
-        <br>
+        <hr>
+        <h1 class="display-2" style="padding-top: 30px">Add Exercises to a Workout.</h1>
         <center>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-light">
                     <thead>
                         <tr>
-                            <th scope=" col">Name</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Equipment</th>
-                            <th scope="col">Time Per Set</th>
-                            <th scope="col">Body Part(s)</th>
-                            <th scope="col">Intensity Factor</th>
+                            <th scope="col">Muscle Group</th>
+                            <th scope="col">Total Time</th>
+                            <th scope="col">Created By:</th>
                             <th scope="col">Update</th>
                             <th scope="col">Delete</th>
                         </tr>
                     </thead>
-                    <?php foreach ($list_of_exercises as $exercise):  ?>
+                    <?php foreach ($list_of_workouts as $workout):  ?>
                     <tr>
-                        <th scope="col"><?php echo $exercise['name']; ?></td>
-                        <td><?php echo $exercise['equipment']; ?></td>
-                        <td><?php echo $exercise['time_per_set']; ?></td>
-                        <td><?php echo $exercise['body_part']; ?></td>
-                        <td><?php echo $exercise['intensity_factor']; ?></td>
+                        <th scope="col"><?php echo $workout['workout_name']; ?></td>
+                        <td><?php echo $workout['equipment']; ?></td>
+                        <td><?php echo $workout['muscle_group']; ?></td>
+                        <td><?php echo $workout['total_time']; ?> minutes</td>
+                        <td><?php echo $workout['username']; ?></td>
 
                         <td>
-                            <?php if ($_SESSION['username'] == $exercise['username']): ?>
+                            <?php if ($_SESSION['username'] == $workout['username']): ?>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-secondary" data-toggle="modal"
                                 data-target="#updateModal"><i class="bi-pencil"></i></button>
@@ -248,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                             <h5 class="modal-title" id="updateModalLabel">Are you sure you want to
                                                 update
                                                 this
-                                                exercise?
+                                                workout?
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -256,18 +225,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                         </div>
                                         <div class="modal-body">
                                             <br>
-                                            <p class="text-muted mx-3">Updating this exercise will update it for all
+                                            <p class="text-muted mx-3">Updating this workout will update it for all
                                                 members
                                                 and trainers. This
                                                 CANNOT be undone.
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="exercises.php" method="post">
+                                            <form action="create_workout.php" method="post">
                                                 <input type="submit" value="Update" name="btnAction"
                                                     class="btn btn-primary" />
-                                                <input type="hidden" name="exercise_to_update"
-                                                    value="<?php echo $exercise['exercise_id'] ?>" />
+                                                <input type="hidden" name="workout_to_update"
+                                                    value="<?php echo $workout['workout_id'] ?>" />
                                             </form>
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
@@ -280,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php if ($_SESSION['username'] == $exercise['username']): ?>
+                            <?php if ($_SESSION['username'] == $workout['username']): ?>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                                 data-target="#deleteModal"><i class="bi-trash3"></i></button>
@@ -293,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                             <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to
                                                 delete
                                                 this
-                                                exercise?
+                                                workout?
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -302,16 +271,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                         <div class="modal-body">
                                             <br>
                                             <p class="text-muted mx-3">
-                                                Deleting this exercise will permanently remove it
-                                                from our collection of exercises. This CANNOT be undone.
+                                                Deleting this workout will permanently remove it
+                                                from our collection of workouts. This CANNOT be undone.
                                             </p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="exercises.php" method="post">
+                                            <form action="create_workout.php" method="post">
                                                 <input type="submit" value="Delete" name="btnAction"
                                                     class="btn btn-danger" />
-                                                <input type="hidden" name="exercise_to_delete"
-                                                    value="<?php echo $exercise['exercise_id'] ?>" />
+                                                <input type="hidden" name="workout_to_delete"
+                                                    value="<?php echo $workout['workout_id'] ?>" />
                                             </form>
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>

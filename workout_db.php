@@ -1,0 +1,113 @@
+<?php
+
+function trainerCheck($username)
+{
+    // db handler
+    global $db;
+
+    // write sql
+    // insert into friends values('someone', 'cs', 4)";
+    $query = "select * from trainer where username = :username";
+
+    // execute the sql
+    //$statement = $db->query($query);   // query() will compile and execute the sql
+    $statement = $db->prepare($query); // only compiles
+
+    //fill in blanks, treat user input as plain string, this prevents sql injections
+    $statement->bindValue(':username', $username);
+
+
+    //now execute
+    $statement->execute();
+    $result = $statement->fetch();
+
+    // release; free the connection to the server so other sql statements may be issued 
+    $statement->closeCursor();
+    return $result;
+}
+
+function createWorkout($workout_id, $workout_name, $total_time, $muscle_group, $equipment, $username)
+{
+    // db handler
+	global $db;
+
+	// write sql
+	$query = "insert into workout values(NULL,:workout_name, :total_time, :muscle_group, :equipment, :username)";
+
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':workout_name', $workout_name);
+	$statement->bindValue(':total_time', $total_time);
+	$statement->bindValue(':muscle_group', $muscle_group);
+	$statement->bindValue(':equipment', $equipment);
+	$statement->bindValue(':username', $username);
+
+
+	$statement->execute();
+	
+	// release; free the connection to the server so other sql statements may be issued 
+	$statement->closeCursor();
+}
+
+function getAllWorkouts()
+{
+	global $db;
+	$query = "select * from workout";
+	$statement = $db->query($query);     // 16-Mar, stopped here, still need to fetch and return the result 
+	
+	// fetchAll() returns an array of all rows in the result set
+	$results = $statement->fetchAll();   
+
+	$statement->closeCursor();
+
+	return $results;
+}
+
+function getWorkout_byId($workout_id)
+{
+	global $db;
+	$query = "select * from workout where workout_id = :workout_id";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;	
+}
+
+
+function updateWorkout($workout_id, $workout_name, $total_time, $muscle_group, $equipment, $username)
+{
+	global $db;
+	$query = "update workout set workout_name = :workout_name, total_time = :total_time, muscle_group = :muscle_group, equipment = :equipment, username = :username where workout_id = :workout_id";
+	$statement = $db->prepare($query); 
+	$statement->bindValue(':workout_name', $workout_name);
+	$statement->bindValue(':total_time', $total_time);
+	$statement->bindValue(':muscle_group', $muscle_group);
+	$statement->bindValue(':equipment', $equipment);
+	$statement->bindValue(':username', $username);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->execute();
+	$statement->closeCursor();
+}
+
+
+function deleteWorkout($workout_id)
+{
+	global $db;
+	$query = "delete from workout where workout_id = :workout_id";
+	$statement = $db->prepare($query); 
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->execute();
+	$statement->closeCursor();
+}
+?>
