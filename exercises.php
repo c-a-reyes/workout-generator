@@ -101,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -153,7 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </small>
             </div>
             <div class="row mb-3 mx-2">
-
                 <div class="col" style="padding: 5px">
                     Time Per Set:
                     <div class="input-group">
@@ -194,27 +194,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </form>
         <hr />
         <br>
-        <div class="row">
-            <span class="col display-5">Our Exercises</span>
-            <?php echo ($trainer != NULL) ? 
-            "<a href='create_workout.php' class='col col-lg-2 btn btn-dark mx-3' style='font-size: 20px'>
-                <i class='bi-wrench-adjustable' style='font-size: 25px'></i>
-                 Create a Workout
-             </a>"
-              : 
-            "<button  disabled class='btn btn-dark mx-3' style='font-size: 20px; width: 270px'>
-                    <i class='bi-wrench-adjustable' style='font-size: 25px'></i> 
-                    Create a Workout
-             </button> 
-             <small class='text-muted' style='text-align: right'>You must be a trainer to create a workout.</small>
-            "; ?>
-
-
-        </div>
+        <h1 class="col display-5">Our Exercises</h1>
         <br>
         <center>
             <div class="table-responsive">
-                <table class="table table-striped table-hover table-light">
+                <table class="lead table table-striped table-hover table-light">
                     <thead>
                         <tr>
                             <th scope=" col">Name</th>
