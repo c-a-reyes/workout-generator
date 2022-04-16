@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     }
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -100,8 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <nav class="navbar navbar-dark bg-dark">
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
+<<<<<<< HEAD
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
+=======
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercise Management</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="search.php">Search Exercises</a>
+>>>>>>> 15bbc80 (Added search feature)
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -111,17 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </div>
     </nav>
     <div class="container">
-        <input id="searchBar" type="text" placeholder="Search for an exercise">
-        <style type="text/css">
-        #searchBar {
-            float: center;
-            padding: 6px;
-            margin-top: 8px;
-            margin-right: px;
-            font-size: 20px;
-        }
-        </style>
-        <p>Search criteria would go here once we integrate it</p>
         <hr>
         <h1 class="display-2">Add an Exercise.</h1>
         <form name="exerciseForm" action="exercises.php" method="post">
@@ -311,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <?php endforeach; ?>
                 </table>
             </div>
-        </center>
+        </center>                      
     </div>
 </body>
 
