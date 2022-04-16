@@ -48,15 +48,15 @@ $list_of_exercises = getAllExercises();
                 foreach ($_POST['add'] as $exercise)
                 {
                 addExercisesToWorkout(null, $exercise, $_POST['workout-dropdown']);
-                addMetrics($exercise, null);
-                if (isset($_POST['distance']) and isset($_POST['duration']))
-                    {
-                        addCardioMetrics($exercise, null, $_POST['distance'], $_POST['duration']);   
-                    }  
-                elseif (isset($_POST['reps']) and isset($_POST['sets']))
-                    {
-                        addLiftingMetrics($exercise, null, $_POST['reps'], $_POST['set']);
-                    }
+                //addMetrics($exercise, null);
+                // if (isset($_POST['distance']) and isset($_POST['duration']))
+                //     {
+                //         addCardioMetrics($exercise, null, $_POST['distance'], $_POST['duration']);   
+                //     }  
+                // elseif (isset($_POST['reps']) and isset($_POST['sets']))
+                //     {
+                //         addLiftingMetrics($exercise, null, $_POST['reps'], $_POST['set']);
+                //     }
                 }
                 // foreach ($_POST['delete'] as $exercise)
                 // {
@@ -241,10 +241,10 @@ $list_of_exercises = getAllExercises();
                                 <th scope="col">Time Per Set</th>
                                 <th scope="col">Body Part(s)</th>
                                 <th scope="col">Intensity Factor</th>
-                                <th scope="col">Cardio (Fill One)</th>
-                                <th scope="col">Lifting (Fill One)</th>
+                                <!-- <th scope="col">Cardio (Fill One)</th>
+                                <th scope="col">Lifting (Fill One)</th> -->
                                 <th scope="col">Add</th>
-                                <th scope="col">Remove</th>
+                                <!-- <th scope="col">Remove</th> -->
                             </tr>
                         </thead>
                         <div class="form-check">
@@ -256,7 +256,7 @@ $list_of_exercises = getAllExercises();
                                 <td><?php echo $exercise['body_part']; ?></td>
                                 <td><?php echo $exercise['intensity_factor']; ?></td>
                                 <!-- Start of Metrics -->
-                                <td id="cardioInfo<?php echo $exercise['exercise_id'];?>">
+                                <!-- <td id="cardioInfo<?php echo $exercise['exercise_id'];?>">
                                     <div class="row mb-3 mx-3" style="padding: 5px">
                                         <input aria-describedby="distanceHelp" placeholder="Enter distance" type="text"
                                             class="form-control" name="distance" />
@@ -290,14 +290,14 @@ $list_of_exercises = getAllExercises();
                                         </div>
                                         <small class="form-text text-muted">i.e. Series of repetitions</small>
                                     </div>
-                                </td>
+                                </td> -->
                                 <td>
                                     <input value='<?php echo $exercise['exercise_id']?>' name="add[]" type="checkbox">
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <input value='<?php echo $exercise['exercise_id']?>' name="delete[]"
                                         type="checkbox">
-                                </td>
+                                </td> -->
                             </tr>
                         </div>
                         <?php endforeach; ?>
