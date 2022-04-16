@@ -6,6 +6,7 @@
 
     $password = null;
     $confirmPassword = null;
+    $usernameTaken = null;
     
     if($_SERVER["REQUEST_METHOD"]=="POST")
     {
@@ -13,20 +14,24 @@
         {
             $password = $_POST['password'];
             $confirmPassword = $_POST['confirmPassword'];
-            if ($password == $confirmPassword)
+            $usernameTaken = checkUser($_POST['username']);
+            if ($usernameTaken == false)
             {
-                addUser($_POST['username'], $_POST['password'], $_POST['gym_address']);
-                if ($_POST['UserRadios'] == 'member') {
-                    addUserAsMember($_POST['username'], $_POST['height'], $_POST['weight'], $_POST['goal'] );
-                }
-                if ($_POST['UserRadios'] == 'trainer') {
-                    addUserAsTrainer($_POST['username'], $_POST['specialty'], $_POST['experience'], $_POST['certification'] );
-                }
+                if ($password == $confirmPassword)
+                {
+                    addUser($_POST['username'], $_POST['password'], NULL);
+                    if ($_POST['UserRadios'] == 'member') {
+                        addUserAsMember($_POST['username'], $_POST['height'], $_POST['weight'], $_POST['goal'] );
+                    }
+                    if ($_POST['UserRadios'] == 'trainer') {
+                        addUserAsTrainer($_POST['username'], $_POST['specialty'], $_POST['experience'], $_POST['certification'] );
+                    }
 
-                addGym($_POST['gym_name'], $_POST['gym_address'], $_POST['gym_phone_number'], $_POST['gym_hours'], $_POST['gym_rate']);
+                    addGym(NULL, $_POST['gym_name'], $_POST['gym_address'], $_POST['gym_phone_number'], $_POST['gym_hours'], $_POST['gym_rate']);
 
-                $_SESSION["username"]=$_POST['username'];
-                header("location:dashboard.php");
+                    $_SESSION["username"]=$_POST['username'];
+                    header("location:dashboard.php");
+                }
             }
         }
     }
@@ -99,8 +104,10 @@
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
     </nav>
-    <?php echo ($password != $confirmPassword) ? "<div class='alert alert-danger' role='alert'>
- Passwords do not match. Please try again.</div><br>" : ""; ?>
+    <?php echo ($password != $confirmPassword) ? "<div style='margin-bottom: 0px' class='alert alert-danger' role='alert'>
+ Passwords do not match. Please try again.</div>" : ""; ?>
+    <?php echo ($usernameTaken == true) ? "<div class='alert alert-danger' role='alert'>
+ Username taken. Please try again.</div><br>" : ""; ?>
     <center>
         <div class="bg-light" style="width: 75%; border-radius: 15px; margin-top: 50px; margin-bottom: 50px">
             <h1 style="padding-top: 30px" class="display-4">Create an Account.</h1>
@@ -275,8 +282,8 @@
                                 </div>
                                 <div class="row mb-3 mx-3" style="padding: 5px">
                                     Certifications:
-                                    <input placeholder="Enter certifications" aria-describedby="certHelp" id="certs"
-                                        type="text" class="form-control" name="certifications" required />
+                                    <input placeholder="Enter certification" aria-describedby="certHelp" id="certs"
+                                        type="text" class="form-control" name="certification" required />
                                     <small id="certHelp" style="text-align: left; padding-left: 0px"
                                         class="form-text text-muted">e.g. NASM, CrossFit L3, etc.
                                     </small>

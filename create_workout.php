@@ -45,17 +45,29 @@ $list_of_exercises = getAllExercises();
         {
             if (isset($_POST['workout-dropdown']))
             {
-                foreach ($_POST['invite'] as $exercise)
+                foreach ($_POST['add'] as $exercise)
                 {
                 addExercisesToWorkout(null, $exercise, $_POST['workout-dropdown']);
-                echo ($_POST['workout-dropdown']);
-                
+                addMetrics($exercise, null);
+                if (isset($_POST['distance']) and isset($_POST['duration']))
+                    {
+                        addCardioMetrics($exercise, null, $_POST['distance'], $_POST['duration']);   
+                    }  
+                elseif (isset($_POST['reps']) and isset($_POST['sets']))
+                    {
+                        addLiftingMetrics($exercise, null, $_POST['reps'], $_POST['set']);
+                    }
                 }
+                // foreach ($_POST['delete'] as $exercise)
+                // {
+                // deleteExercisesFromWorkout(null, $exercise, $_POST['workout-dropdown']);                
+                // }
             }
             else
             {
                 echo 'failed';
             }
+            header('location:view_workout.php');
         }
     }
 
@@ -116,6 +128,7 @@ $list_of_exercises = getAllExercises();
 
     <!-- include your CSS -->
     <!-- <link rel="stylesheet" href="custom.css" />  -->
+
 </head>
 
 <body>
@@ -133,7 +146,7 @@ $list_of_exercises = getAllExercises();
         </div>
     </nav>
     <div class="container">
-        <h1 class="display-2" style="padding-top: 30px">Create or Update a Workout.</h1>
+        <h1 class="display-2" style="padding-top: 30px; padding-bottom: 20px">Create or Update a Workout.</h1>
         <form name="workoutForm" action="view_workout.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Workout Name:
@@ -208,7 +221,7 @@ $list_of_exercises = getAllExercises();
         <form name="addExercisesToWorkout" id="addExercisesToWorkout" action="create_workout.php" method="post">
             <br>
             <hr>
-            <h1 class="display-2" style="padding-top: 30px">Add Exercises to a Workout.</h1>
+            <h1 class="display-2" style="padding-top: 20px">Add Exercises to a Workout.</h1>
             <br>
             <select form="addExercisesToWorkout" name="workout-dropdown" class="form-select"
                 aria-label="Default select example">
@@ -228,7 +241,10 @@ $list_of_exercises = getAllExercises();
                                 <th scope="col">Time Per Set</th>
                                 <th scope="col">Body Part(s)</th>
                                 <th scope="col">Intensity Factor</th>
+                                <th scope="col">Cardio (Fill One)</th>
+                                <th scope="col">Lifting (Fill One)</th>
                                 <th scope="col">Add</th>
+                                <th scope="col">Remove</th>
                             </tr>
                         </thead>
                         <div class="form-check">
@@ -239,22 +255,62 @@ $list_of_exercises = getAllExercises();
                                 <td><?php echo $exercise['time_per_set']; ?></td>
                                 <td><?php echo $exercise['body_part']; ?></td>
                                 <td><?php echo $exercise['intensity_factor']; ?></td>
+                                <!-- Start of Metrics -->
+                                <td id="cardioInfo<?php echo $exercise['exercise_id'];?>">
+                                    <div class="row mb-3 mx-3" style="padding: 5px">
+                                        <input aria-describedby="distanceHelp" placeholder="Enter distance" type="text"
+                                            class="form-control" name="distance" />
+                                        <small id="distanceHelp" class="form-text text-muted">e.g. 3.1 miles</small>
 
+                                    </div>
+                                    <div class="row mb-3 mx-3" style="padding: 5px">
+                                        <input aria-describedby="durationHelp" placeholder="Enter duration" type="text"
+                                            class="form-control" name="duration" />
+                                        <small id="durationHelp" class="form-text text-muted">e.g. 15 minutes</small>
+                                    </div>
+                                </td>
+                                <td id="liftingInfo<?php echo $exercise['exercise_id'];?>">
+                                    <div class="row mb-3 mx-3" style="padding: 5px">
+                                        <div class="input-group px-0">
+                                            <input placeholder="Enter reps" type="number" class="form-control"
+                                                name="reps" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">reps</span>
+                                            </div>
+                                        </div>
+                                        <small class="form-text text-muted">i.e. Single movements</small>
+                                    </div>
+                                    <div class="row mb-3 mx-3" style="padding: 5px">
+                                        <div class="input-group px-0">
+                                            <input placeholder="Enter sets" type="number" class="form-control"
+                                                name="sets" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">sets</span>
+                                            </div>
+                                        </div>
+                                        <small class="form-text text-muted">i.e. Series of repetitions</small>
+                                    </div>
+                                </td>
                                 <td>
-                                    <input id=<?php echo $exercise['exercise_id']?>
-                                        value=<?php echo $exercise['exercise_id']?> name="invite[]" type="checkbox">
-
-                                    </label>
+                                    <input value='<?php echo $exercise['exercise_id']?>' name="add[]" type="checkbox">
+                                </td>
+                                <td>
+                                    <input value='<?php echo $exercise['exercise_id']?>' name="delete[]"
+                                        type="checkbox">
+                                </td>
+                            </tr>
                         </div>
-                        </td>
-                        </tr>
                         <?php endforeach; ?>
                     </table>
-                    <button style="background-color: rgb(11, 10, 98); color: #fff; float: right; font-size: 25px; height: 85px" type="submit" name="btnAction" value="Add these exercises" class="btn my-3"><i style="font-size: 35px;" class="bi-plus-lg"></i>Add Exercises</button>
+                </div>
+            </center>
+            <button
+                style=" background-color: rgb(10, 55, 146);; color: #fff; float: right; font-size: 25px; height: 85px"
+                type="submit" name="btnAction" value="Add these exercises" class="btn my-3"><i style="font-size: 35px;"
+                    class="px-1 bi-plus-lg"></i>Add
+                Exercises
+            </button>
         </form>
-    </div>
-    </center>
-    </div>
 </body>
 
 </html>
