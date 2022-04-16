@@ -38,13 +38,24 @@ $list_of_exercises = getAllExercises();
         }
         if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add these exercises")
         {
-            foreach ($v as $_POST['invite']){
-            addExercisesToWorkout($v, $_POST['workout-dropdown']);
+            if (isset($_POST['workout-dropdown']))
+            {
+                foreach ($_POST['invite'] as $exercise)
+                {
+                addExercisesToWorkout(null, $exercise, $_POST['workout-dropdown']);
+                echo ($_POST['workout-dropdown']);
+                
+                }
+            }
+            else
+            {
+                echo 'failed';
             }
         }
     }
 
 ?>
+
 
 
 
@@ -186,52 +197,55 @@ $list_of_exercises = getAllExercises();
             <a href="create_workout.php" class="btn btn-secondary my-2 px-3">Cancel</a>
             <?php endif ?>
         </form>
-        <form method="post">
-
-        <br>
-        <hr>
-        <h1 class="display-2" style="padding-top: 30px">Add Exercises to a Workout.</h1>
-        <select name ="workout-dropdown" class="form-select" aria-label="Default select example">
-            <option selected>Choose workout to add exercises to</option>
+        <form name="addExercisesToWorkout" id="addExercisesToWorkout" action="create_workout.php" method="post">
+            <br>
+            <hr>
+            <h1 class="display-2" style="padding-top: 30px">Add Exercises to a Workout.</h1>
+            <br>
+            <select form="addExercisesToWorkout" name="workout-dropdown" class="form-select"
+                aria-label="Default select example">
+                <option selected>Choose workout to add exercises to</option>
                 <?php foreach ($list_of_workouts as $workout):  ?>
-            <option value=<?php $workout['workout_id']?> ><?php echo $workout['workout_name']; ?></option>
-            <?php endforeach; ?>
-        </select>
-        <center>
- <div class="table-responsive">
-                <table class="table table-striped table-hover table-light">
-                    <thead>
-                        <tr>
-                            <th scope=" col">Name</th>
-                            <th scope="col">Equipment</th>
-                            <th scope="col">Time Per Set</th>
-                            <th scope="col">Body Part(s)</th>
-                            <th scope="col">Intensity Factor</th>
-                            <th scope="col">Add</th>
-                        </tr>
-                    </thead>
-    <div class="form-check">
-                    <?php foreach ($list_of_exercises as $exercise):  ?>
-                    <tr>
-                        <th scope="col"><?php echo $exercise['name']; ?></td>
-                        <td><?php echo $exercise['equipment']; ?></td>
-                        <td><?php echo $exercise['time_per_set']; ?></td>
-                        <td><?php echo $exercise['body_part']; ?></td>
-                        <td><?php echo $exercise['intensity_factor']; ?></td>
+                <option value="<?php echo $workout['workout_id']?>"><?php echo $workout['workout_name']; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <br>
+            <center>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-light">
+                        <thead>
+                            <tr>
+                                <th scope=" col">Name</th>
+                                <th scope="col">Equipment</th>
+                                <th scope="col">Time Per Set</th>
+                                <th scope="col">Body Part(s)</th>
+                                <th scope="col">Intensity Factor</th>
+                                <th scope="col">Add</th>
+                            </tr>
+                        </thead>
+                        <div class="form-check">
+                            <?php foreach ($list_of_exercises as $exercise):  ?>
+                            <tr>
+                                <th scope="col"><?php echo $exercise['name']; ?></td>
+                                <td><?php echo $exercise['equipment']; ?></td>
+                                <td><?php echo $exercise['time_per_set']; ?></td>
+                                <td><?php echo $exercise['body_part']; ?></td>
+                                <td><?php echo $exercise['intensity_factor']; ?></td>
 
-                        <td>
-   <input id=<?php echo $exercise['exercise_id']?> value=<?php echo $exercise['exercise_id']?>  name="invite[]" type="checkbox">
-    
-  </label>
-</div>
+                                <td>
+                                    <input id=<?php echo $exercise['exercise_id']?>
+                                        value=<?php echo $exercise['exercise_id']?> name="invite[]" type="checkbox">
+
+                                    </label>
+                        </div>
                         </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-<button type="submit" class="btn btn-dark" name="btnAction">Add these exercises</button>
-                    </form>
-            </div>
-        </center>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                    <button style="background-color: rgb(11, 10, 98); color: #fff; float: right; font-size: 25px; height: 85px" type="submit" name="btnAction" value="Add these exercises" class="btn my-3"><i style="font-size: 35px;" class="bi-plus-lg"></i>Add Exercises</button>
+        </form>
+    </div>
+    </center>
     </div>
 </body>
 
