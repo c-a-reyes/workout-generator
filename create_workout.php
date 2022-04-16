@@ -10,7 +10,12 @@ if(!isset($_SESSION["username"]))
     header("location:login.php");
 }
 
+$trainer = trainerCheck($_SESSION['username']);
 
+if ($trainer == null)
+{
+    header("location:view_workout.php");
+}
 $list_of_workouts = getAllWorkouts();
 $workout_to_update = null;
 $list_of_exercises = getAllExercises();
@@ -118,6 +123,7 @@ $list_of_exercises = getAllExercises();
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -127,8 +133,8 @@ $list_of_exercises = getAllExercises();
         </div>
     </nav>
     <div class="container">
-        <h1 class="display-2" style="padding-top: 30px">Create a Workout.</h1>
-        <form name="workoutForm" action="create_workout.php" method="post">
+        <h1 class="display-2" style="padding-top: 30px">Create or Update a Workout.</h1>
+        <form name="workoutForm" action="view_workout.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Workout Name:
                 <input placeholder="Enter workout name" aria-describedby="nameHelp" type="text" class="form-control"
@@ -191,10 +197,12 @@ $list_of_exercises = getAllExercises();
 
             <?php if ($workout_to_update==null): ?>
             <input type="submit" value="Create" name="btnAction" class="btn btn-dark mx-3 my-2 px-3" />
+            <a href="view_workout.php" class="btn btn-dark my-2 px-3">Cancel</a>
+
             <?php else: ?>
-            <input type="submit" value="Confirm Update" name="btnAction" class="btn btn-success mx-3 my-2 px-3"
+            <input type="submit" value="Confirm Update" name="btnAction" class="btn btn-outline-success mx-3 my-2 px-3"
                 title="confirm update on workout" />
-            <a href="create_workout.php" class="btn btn-secondary my-2 px-3">Cancel</a>
+            <a href="view_workout.php" class="btn btn-dark my-2 px-3">Cancel</a>
             <?php endif ?>
         </form>
         <form name="addExercisesToWorkout" id="addExercisesToWorkout" action="create_workout.php" method="post">

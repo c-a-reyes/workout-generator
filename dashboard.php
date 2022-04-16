@@ -63,6 +63,7 @@
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
+            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
@@ -94,25 +95,28 @@
         <div class="container-fluid text-center" style="padding-bottom: 30px; padding-top: 20px;">
             <div class="row">
                 <div class="col pt-2 px-3">
-                    <a style="margin: 100px"><i class="bi-sliders" style="font-size: 75px"></i></a>
-                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Search or Add Exercises</h3>
+                    <a href="exercises.php" style="margin: 100px"><i class="bi-sliders"
+                            style="color: #fff; font-size: 75px"></i></a>
+                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Create or View Exercises</h3>
                     <p class="lead" style="margin-top: 10px; font-size: 18px">Browse our collection of exercises. If you
                         can't find one that suits your
                         needs,
                         add it to our collection!</p>
                 </div>
                 <div class="col pt-2 px-3">
-                    <a style="margin: 100px"><i class="bi-stack" style="font-size: 75px"></i></a>
+                    <a href="exercises.php" style="margin: 100px"><i class="bi-search"
+                            style="color: #fff; font-size: 75px"></i></a>
+                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Search Exercises</h3>
+                    <p class="lead" style="margin-top: 10px; font-size: 18px">Search for an exercise by any of it's
+                        attributes, whether it be name, intensity, creator, and more.
+                    </p>
+                </div>
+                <div class="col pt-2 px-3">
+                    <a href="view_workout.php" style="margin: 100px"><i class="bi-stack"
+                            style="color: #fff; font-size: 75px"></i></a>
                     <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Build or View Workouts</h3>
                     <p class="lead" style="margin-top: 10px; font-size: 18px">Members can discover
                         cardio or muscle-group specific workouts. Trainers can create workouts.</p>
-                </div>
-                <div class="col pt-2 px-3">
-                    <a style="margin: 100px"><i class="bi-filetype-csv" style="font-size: 75px"></i></a>
-                    <h3 class="display-6" style="margin-top: 25px; font-size: 32px">Export Workouts</h3>
-                    <p class="lead" style="margin-top: 10px; font-size: 18px">If you find a workout you like,
-                        you can download it locally to take it with you on your next trip to the gym.
-                    </p>
                 </div>
             </div>
         </div>
