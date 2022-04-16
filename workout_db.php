@@ -151,6 +151,48 @@ function deleteWorkout($workout_id)
 	$statement->closeCursor();
 }
 
+
+function getCardioMetric($metric_id)
+{
+	global $db;
+	$query = "select * from cardioMetrics where metric_id = :metric_id";
+	// "select * from exercise where name = $name";
+	
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':metric_id', $metric_id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;	
+}
+
+function getLiftingMetric($metric_id)
+{
+	global $db;
+	$query = "select * from liftingMetrics where metric_id = :metric_id";
+	// "select * from exercise where name = $name";
+	
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':metric_id', $metric_id);
+	$statement->execute();
+
+	// fetch() returns a row
+	$results = $statement->fetch();   
+
+	$statement->closeCursor();
+
+	return $results;	
+}
+
+
 function addExercisesToWorkout($metric_id, $exercise_id, $workout_id)
 {
 	global $db;
