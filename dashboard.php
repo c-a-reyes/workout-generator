@@ -73,14 +73,14 @@
         </div>
     </nav>
     <div id="main" class="px-4">
-        <div id="titleDiv" style="background-color: #">
+        <div id="titleDiv">
             <center>
                 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="154" fill="currentColor"
                     class="bi bi-activity mt-3 mb-2" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
                         d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
                 </svg>
-                <h1 class="display-4"">Workout Generator</h1>
+                <h1 class="display-4">Workout Generator</h1>
                 <p class=" lead" style=" margin-left: 15%; margin-right: 15%; margin-top: 1%; font-size: 24px">Looking
                     to put muscle
                     on,
@@ -92,7 +92,7 @@
             </center>
         </div>
         <hr class="mt-5">
-        <div class="container-fluid text-center" style="padding-bottom: 30px; padding-top: 20px; background-color:">
+        <div class="container-fluid text-center" style="padding-bottom: 30px; padding-top: 20px;">
             <div class="row">
                 <div class="col pt-2 px-3">
                     <a href="exercises.php" style="margin: 100px"><i class="bi-sliders"
