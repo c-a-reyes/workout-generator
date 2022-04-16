@@ -159,9 +159,6 @@ $workout_to_update = null;
                                             <?php echo $workout['username']?>'s
                                             <?php echo $workout['workout_name']?>
                                         </h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
                                     </div>
                                     <div class="modal-body">
                                         <br>
