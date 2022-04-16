@@ -193,4 +193,21 @@ function getLiftingMetric($metric_id)
 }
 
 
+function addExercisesToWorkout($metric_id, $exercise_id, $workout_id)
+{
+	global $db;
+	$query = "insert into contains values(:metric_id,:exercise_id, :workout_id)";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->bindValue(':metric_id', $metric_id);
+	$statement->execute();
+
+	$statement->closeCursor();
+}
+
 ?>
