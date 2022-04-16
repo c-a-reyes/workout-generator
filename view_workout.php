@@ -209,12 +209,32 @@ $workout_to_update = null;
                                                         <?php $exercises_per_workouts = getExerciseIdByWorkoutId($workout['workout_id']); ?>
                                                         <?php if ($exercises_per_workouts != null): ?>
                                                         <?php foreach ($exercises_per_workouts as $exercise_ids): ?>
-                                                        <?php $exercise = getExerciseNameByExerciseId($exercise_ids['exercise_id']); ?>
+                                                        <?php 
+                                                        $exercise = getExerciseNameByExerciseId($exercise_ids['exercise_id']); 
+                                                        $metric = getCardioMetric($exercise_ids['metric_id']);
+                                                        ?>
                                                         <ul>
                                                             <li style="list-style-type: disc">
-                                                                <span
-                                                                    style="float: left"><?php echo $exercise['name']; ?>,
-                                                                    metrics</span>
+                                                                <!-- our metric is a cardioMetric -->
+                                                                <?php if ($metric != null): ?>
+                                                                <span style="float: left"><span
+                                                                        style="font-weight: bold"><?php echo $exercise['name']; ?>,</span>
+                                                                    distance: <?php echo $metric['distance'] ?>,
+                                                                    duration: <?php echo $metric['duration'] ?>
+                                                                </span>
+                                                                <!-- our metric is a liftingMetric -->
+                                                                <?php elseif (getLiftingMetric($exercise_ids['metric_id']) != null): ?>
+                                                                <?php $metric = getLiftingMetric($exercise_ids['metric_id']); ?>
+                                                                <span style="float: left"><span
+                                                                        style="font-weight: bold"><?php echo $exercise['name']; ?>,</span>
+                                                                    sets: <?php echo $metric['sets']; ?>,
+                                                                    reps: <?php echo $metric['reps']; ?>
+                                                                </span>
+                                                                <?php else: ?>
+                                                                <span style="float: left; font-weight: bold">
+                                                                    <?php echo $exercise['name']; ?>
+                                                                </span>
+                                                                <?php endif ?>
                                                             </li>
                                                         </ul>
                                                         <?php endforeach; ?>
