@@ -97,15 +97,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <th scope="col">Intensity Factor</th>
                             </tr>
                         </thead>
-                            <?php foreach ($exercise_matches as $exercise):  ?>
-                            <tr>
-                                <th scope="col"><?php echo $exercise['name']; ?></td>
-                                <td><?php echo $exercise['equipment']; ?></td>
-                                <td><?php echo $exercise['time_per_set']; ?></td>
-                                <td><?php echo $exercise['body_part']; ?></td>
-                                <td><?php echo $exercise['intensity_factor']; ?></td>
-                            </tr>
-                            <?php endforeach; ?>
+                        <?php if (is_array($exercise_matches) || is_object($exercise_matches)): ?> 
+                                <?php foreach ($exercise_matches as $exercise):  ?>
+                                <tr>
+                                    <th scope="col"><?php echo $exercise['name']; ?></td>
+                                    <td><?php echo $exercise['equipment']; ?></td>
+                                    <td><?php echo $exercise['time_per_set']; ?></td>
+                                    <td><?php echo $exercise['body_part']; ?></td>
+                                    <td><?php echo $exercise['intensity_factor']; ?></td>
+                                </tr>
+                                <?php endforeach; ?> 
+                        <?php endif ?>
                         </table>          
         </div>
 </div>
