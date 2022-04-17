@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 <div class="form-group mb-2" padding = "20 px" >
                     <center>
                     </center>
-                    <input style="margin-top: 25px" placeholder="Search..." type="text" name="search" class="form-control" required> <i class="bi bi-search"></i>    
+                    <input style="margin-top: 25px" placeholder="Search..." type="text" name="search" class="form-control" required>   
                 </div>
             <center>
                 <div class="btn-group">
