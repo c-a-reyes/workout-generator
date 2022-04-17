@@ -137,11 +137,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     
     <div class="container">
     <form  action="exercises.php" method="POST">
-                <div class="form-group mx-sm-3 mb-2" padding = "20 px" >
+                <div class="form-group mb-2" padding = "20 px" >
                     <center>
-                        <h2 for="example"> Search our database with any of these criteria! </h2>
                     </center>
-                    <input type="text" name="search" class="form-control" required/>
+                    <input style="margin-top: 25px" placeholder="Search..." type="text" name="search" class="form-control" required> <i class="bi bi-search"></i>    
                 </div>
             <center>
                 <div class="btn-group">
@@ -158,7 +157,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     <div class="table-responsive">
                     <table class="table table-striped table-hover table-light">
-                        <thead>
+
+                        <?php if (is_array($exercise_matches) || is_object($exercise_matches)): ?> 
+                                                    <thead>
                             <tr>
                             <th scope=" col">Name</th>
                             <th scope="col">Equipment</th>
@@ -169,7 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             <th scope="col">Delete</th>
                             </tr>
                         </thead>
-                        <?php if (is_array($exercise_matches) || is_object($exercise_matches)): ?> 
                                 <?php foreach ($exercise_matches as $exercise):  ?>
                                 <tr>
                                     <th scope="col"><?php echo $exercise['name']; ?></td>
