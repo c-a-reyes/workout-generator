@@ -226,6 +226,7 @@ function deleteExercisesFromWorkout($metric_id, $exercise_id, $workout_id)
 	$statement->execute();
 
 	$statement->closeCursor();
+	echo "hello";
 }
 
 
