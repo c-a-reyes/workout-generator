@@ -11,6 +11,7 @@ if(!isset($_SESSION["username"]))
 }
 
 $trainer = trainerCheck($_SESSION['username']);
+$workoutCreator = WorkoutCreatorCheck(($_SESSION['username']));
 
 if ($trainer == null)
 {
@@ -30,6 +31,7 @@ $list_of_exercises = getAllExercises();
         else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
         {   
           $workout_to_update = getWorkout_byId($_POST['workout_to_update']);
+          
         }
         else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Delete")
         {
@@ -43,25 +45,13 @@ $list_of_exercises = getAllExercises();
         }
         if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add these exercises")
         {
+
             if (isset($_POST['workout-dropdown']))
             {
                 foreach ($_POST['add'] as $exercise)
                 {
                 addExercisesToWorkout(null, $exercise, $_POST['workout-dropdown']);
-                //addMetrics($exercise, null);
-                // if (isset($_POST['distance']) and isset($_POST['duration']))
-                //     {
-                //         addCardioMetrics($exercise, null, $_POST['distance'], $_POST['duration']);   
-                //     }  
-                // elseif (isset($_POST['reps']) and isset($_POST['sets']))
-                //     {
-                //         addLiftingMetrics($exercise, null, $_POST['reps'], $_POST['set']);
-                //     }
                 }
-                // foreach ($_POST['delete'] as $exercise)
-                // {
-                // deleteExercisesFromWorkout(null, $exercise, $_POST['workout-dropdown']);                
-                // }
             }
             else
             {
@@ -226,9 +216,13 @@ $list_of_exercises = getAllExercises();
             <select form="addExercisesToWorkout" name="workout-dropdown" class="form-select"
                 aria-label="Default select example">
                 <option selected>Choose workout to add exercises to</option>
-                <?php foreach ($list_of_workouts as $workout):  ?>
-                <option value="<?php echo $workout['workout_id']?>"><?php echo $workout['workout_name']; ?></option>
+                    <?php if ($workout_to_update!=null): ?> 
+                    <option value=<?php echo $workout_to_update['workout_id'] ?> ><?php echo $workout_to_update['workout_name']; ?></option>
+                    <?php else:?> 
+                <?php foreach ($workoutCreator as $workout):  ?>
+                <option value=<?php echo $workout['workout_id']?>><?php echo $workout['workout_name']; ?></option>
                 <?php endforeach; ?>
+                <?php endif ?>
             </select>
             <br>
             <center>
@@ -307,8 +301,7 @@ $list_of_exercises = getAllExercises();
             <button
                 style=" background-color: rgb(10, 55, 146);; color: #fff; float: right; font-size: 25px; height: 85px"
                 type="submit" name="btnAction" value="Add these exercises" class="btn my-3"><i style="font-size: 35px;"
-                    class="px-1 bi-plus-lg"></i>Add
-                Exercises
+                    class="px-1 bi-plus-lg"></i>Add Exercises
             </button>
         </form>
 </body>
