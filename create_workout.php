@@ -219,9 +219,10 @@ $metricInfo = null;
             <select form="addExercisesToWorkout" name="workout-dropdown" class="form-select"
                 aria-label="Default select example">
                 <option selected>Choose workout to add exercises to</option>
-                    <?php if ($workout_to_update!=null): ?> 
-                    <option value=<?php echo $workout_to_update['workout_id'] ?> ><?php echo $workout_to_update['workout_name']; ?></option>
-                    <?php else:?> 
+                <?php if ($workout_to_update!=null): ?>
+                <option value=<?php echo $workout_to_update['workout_id'] ?>>
+                    <?php echo $workout_to_update['workout_name']; ?></option>
+                <?php else:?>
                 <?php foreach ($workoutCreator as $workout):  ?>
                 <option value=<?php echo $workout['workout_id']?>><?php echo $workout['workout_name']; ?></option>
                 <?php endforeach; ?>
@@ -235,7 +236,7 @@ $metricInfo = null;
                             <tr>
                                 <th scope=" col">Name</th>
                                 <th scope="col">Equipment</th>
-                                <th scope="col">Time Per Set</th>
+                                <th scope="col">Time per Set</th>
                                 <th scope="col">Body Part(s)</th>
                                 <th scope="col">Intensity Factor</th>
                                 <th scope="col">Metrics</th>
@@ -250,7 +251,7 @@ $metricInfo = null;
                                 $metric = getMetric($exercise['exercise_id']);
                                 $metricInfo = getCardioMetric($metric['metric_id']);
                             ?>
-                            <tr>
+                            <tr class="lead">
                                 <th scope="col"><?php echo $exercise['name']; ?></td>
                                 <td><?php echo $exercise['equipment']; ?></td>
                                 <td><?php echo $exercise['time_per_set']; ?></td>
