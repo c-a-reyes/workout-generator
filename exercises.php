@@ -17,6 +17,7 @@ $trainer = trainerCheck($_SESSION['username']);
 
 $list_of_exercises = getAllExercises();
 $exercise_to_update = null;
+$exercise_matches = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
