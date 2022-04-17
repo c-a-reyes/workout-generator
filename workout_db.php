@@ -151,6 +151,56 @@ function deleteWorkout($workout_id)
 	$statement->closeCursor();
 }
 
+function addExercisesToWorkout($metric_id, $exercise_id, $workout_id)
+{
+	global $db;
+	$query = "insert into contains values(NULL,:exercise_id, :workout_id)";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->execute();
+
+	$statement->closeCursor();
+}
+
+
+function deleteExercisesFromWorkout($metric_id, $exercise_id, $workout_id)
+{
+	global $db;
+	$query = "delete from contains where metric_id = :metric_id, exercise_id = :exercise_id, workout_id = :workout_id";
+	// "select * from exercise where name = $name";
+	
+// 1. prepare
+// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->bindValue(':workout_id', $workout_id);
+	$statement->bindValue(':metric_id', $metric_id);
+	$statement->execute();
+
+	$statement->closeCursor();
+}
+
+function getMetric($exercise_id)
+{
+	global $db;
+	$query = "select * from metrics where exercise_id = :exercise_id";
+	// "select * from exercise where name = $name";
+	
+	// 1. prepare
+	// 2. bindValue & execute
+	$statement = $db->prepare($query);
+	$statement->bindValue(':exercise_id', $exercise_id);
+	$statement->execute();
+	$result = $statement->fetch();
+	$statement->closeCursor();
+
+	return $result;
+}
 
 function getCardioMetric($metric_id)
 {
@@ -190,118 +240,6 @@ function getLiftingMetric($metric_id)
 	$statement->closeCursor();
 
 	return $results;	
-}
-
-
-function addExercisesToWorkout($metric_id, $exercise_id, $workout_id)
-{
-	global $db;
-	$query = "insert into contains values(:metric_id,:exercise_id, :workout_id)";
-	// "select * from exercise where name = $name";
-	
-// 1. prepare
-// 2. bindValue & execute
-	$statement = $db->prepare($query);
-	$statement->bindValue(':exercise_id', $exercise_id);
-	$statement->bindValue(':workout_id', $workout_id);
-	$statement->bindValue(':metric_id', $metric_id);
-	$statement->execute();
-
-	$statement->closeCursor();
-}
-
-
-function deleteExercisesFromWorkout($metric_id, $exercise_id, $workout_id)
-{
-	global $db;
-	$query = "delete from contains where metric_id = :metric_id, exercise_id = :exercise_id, workout_id = :workout_id";
-	// "select * from exercise where name = $name";
-	
-// 1. prepare
-// 2. bindValue & execute
-	$statement = $db->prepare($query);
-	$statement->bindValue(':exercise_id', $exercise_id);
-	$statement->bindValue(':workout_id', $workout_id);
-	$statement->bindValue(':metric_id', $metric_id);
-	$statement->execute();
-
-	$statement->closeCursor();
-}
-
-
-function addMetrics($exercise_id, $metric_id)
-{
-	// db handler
-    global $db;
-
-    // write sql
-    // insert into friends values('someone', 'cs', 4)";
-    $query = "insert into metrics values(:exercise_id, :metric_id)";
-
-    // execute the sql
-    //$statement = $db->query($query);   // query() will compile and execute the sql
-    $statement = $db->prepare($query); // only compiles
-
-    //fill in blanks, treat user input as plain string, this prevents sql injections
-    $statement->bindValue(':exercise_id', $exercise_id);
-    $statement->bindValue(':metric_id', $metric_id);
-    //now execute
-    $statement->execute();
-
-    // release; free the connection to the server so other sql statements may be issued 
-    $statement->closeCursor();
-}
-
-function addCardioMetrics($exercise_id, $metric_id, $distance, $duration)
-{
-	// db handler
-    global $db;
-
-    // write sql
-    // insert into friends values('someone', 'cs', 4)";
-    $query = "insert into cardioMetrics values(:exercise_id, :metric_id, :distance, :duration)";
-
-    // execute the sql
-    //$statement = $db->query($query);   // query() will compile and execute the sql
-    $statement = $db->prepare($query); // only compiles
-
-    //fill in blanks, treat user input as plain string, this prevents sql injections
-    $statement->bindValue(':exercise_id', $exercise_id);
-    $statement->bindValue(':metric_id', $metric_id);
-	$statement->bindValue(':distance', $distance);
-    $statement->bindValue(':duration', $duration);
-
-    //now execute
-    $statement->execute();
-
-    // release; free the connection to the server so other sql statements may be issued 
-    $statement->closeCursor();
-}
-
-function addLiftingMetrics($exercise_id, $metric_id, $reps, $sets)
-{
-	// db handler
-    global $db;
-
-    // write sql
-    // insert into friends values('someone', 'cs', 4)";
-    $query = "insert into liftingMetrics values(:exercise_id, :metric_id, :reps, :sets)";
-
-    // execute the sql
-    //$statement = $db->query($query);   // query() will compile and execute the sql
-    $statement = $db->prepare($query); // only compiles
-
-    //fill in blanks, treat user input as plain string, this prevents sql injections
-    $statement->bindValue(':exercise_id', $exercise_id);
-    $statement->bindValue(':metric_id', $metric_id);
-	$statement->bindValue(':reps', $reps);
-    $statement->bindValue(':sets', $sets);
-
-    //now execute
-    $statement->execute();
-
-    // release; free the connection to the server so other sql statements may be issued 
-    $statement->closeCursor();
 }
 
 function WorkoutCreatorCheck($username)

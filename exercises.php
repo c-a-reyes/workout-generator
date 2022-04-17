@@ -24,6 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Add")
     {
         addExercise(NULL, $_SESSION['username'], $_POST['intensity_factor'], $_POST['body_part'], $_POST['time_per_set'], $_POST['equipment'], $_POST['exercise_name']);
+        $eid = getNextExerciseId();
+        addMetrics($eid['max(exercise_id)'], NULL);
+        if ($_POST['metricsDropdown'] == 'Cardio') {
+            addCardioMetrics($eid['max(exercise_id)'], NULL, $_POST['distance'], $_POST['duration']);
+        }
+        if ($_POST['metricsDropdown'] == 'Lifting') {
+            addLiftingMetrics($eid['max(exercise_id)'], NULL, $_POST['reps'], $_POST['sets']);
+        }
         $list_of_exercises = getAllExercises();
     }
     else if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update")
@@ -118,6 +126,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     <!-- include your CSS -->
     <!-- <link rel="stylesheet" href="custom.css" />  -->
+    <script type="text/javascript">
+    function showMetrics() {
+        const metric = document.getElementById('metricsDropdown');
+        let value = metric.options[metric.selectedIndex].value;
+
+        if (value === 'Cardio') {
+            document.getElementById("liftingReps").removeAttribute("required");
+            document.getElementById("liftingSets").removeAttribute("required");
+            document.getElementById('cardioInfo').style.display = 'block';
+            document.getElementById('liftingInfo').style.display = 'none';
+
+        } else if (value === 'Lifting') {
+            document.getElementById("cardioDistance").removeAttribute("required");
+            document.getElementById("cardioDuration").removeAttribute("required");
+            document.getElementById('liftingInfo').style.display = 'block';
+            document.getElementById('cardioInfo').style.display = 'none';
+        }
+    }
+    </script>
 </head>
 
 <body>
@@ -279,6 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <div class="container">
         <hr>
         <h1 class="display-2">Add an Exercise.</h1>
+        <br>
         <form name="exerciseForm" action="exercises.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Exercise Name:
@@ -338,7 +366,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
             <input type="hidden" name="exercise_id" required
                 value="<?php if ($exercise_to_update!=null) echo $exercise_to_update['exercise_id'] ?>" />
-
+            <br>
+            <!-- metrics start here -->
+            <div id="metrics">
+                <div id="dropdown">
+                    <h4 class="display-6 mb-3 mx-3">Does your exercise focus on running or lifting?</h4>
+                    <select name="metricsDropdown" id="metricsDropdown" onchange="javascript:showMetrics();"
+                        class="form-select mb-3" style="margin:0 auto; max-width: 98%; text-align: center"
+                        aria-label="Default select example">
+                        <option class="text-muted" selected>Choose between cardio or lifting...</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Lifting">Lifting</option>
+                    </select>
+                </div>
+                <div class="row mb-3 mx-2" id="cardioInfo" style="display: none">
+                    <div class="col" style="padding: 5px">
+                        Distance:
+                        <input aria-describedby="distanceHelp" placeholder="Enter distance" type="text"
+                            class="form-control" name="distance" id="cardioDistance" required />
+                        <small id="distanceHelp" class="form-text text-muted">e.g. 3.1 miles</small>
+                    </div>
+                    <div class="col" style="padding: 5px">
+                        Duration:
+                        <input aria-describedby="durationHelp" placeholder="Enter duration" type="text"
+                            class="form-control" name="duration" id="cardioDuration" required />
+                        <small id="durationHelp" class="form-text text-muted">e.g. 15 minutes</small>
+                    </div>
+                </div>
+                <div class="row mb-3 mx-2" id="liftingInfo" style="display: none">
+                    <div class="col" style="padding: 5px">
+                        Set(s):
+                        <div class="input-group px-0">
+                            <input placeholder="Enter sets" type="number" class="form-control" name="sets"
+                                id="liftingSets" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text">set(s)</span>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">i.e. Series of repetitions</small>
+                    </div>
+                    <div class="col" style="padding: 5px">
+                        Rep(s):
+                        <div class="input-group px-0">
+                            <input placeholder="Enter reps" type="number" class="form-control" name="reps"
+                                id="liftingReps" required />
+                            <div class="input-group-append">
+                                <span class="input-group-text">rep(s)</span>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">i.e. Single movements</small>
+                    </div>
+                </div>
+            </div>
             <?php if ($exercise_to_update==null): ?>
             <input type="submit" value="Add" name="btnAction" class="btn btn-dark mx-3 my-2 px-3" />
             <?php else: ?>
@@ -349,8 +428,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </form>
         <hr />
         <br>
-        <h1 class="col display-5">Our Exercises</h1>
-        <br>  
+        <h1 class="col display-2">Our Exercises.</h1>
+        <br>
         <center>
             <div class="table-responsive">
                 <table class="lead table table-striped table-hover table-light">
