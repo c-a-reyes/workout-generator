@@ -276,7 +276,7 @@
                                             </small>
                                         </div>
                                         <div class="input-group-append">
-                                            <span class="input-group-text">years</span>
+                                            <span class="input-group-text">year(s)</span>
                                         </div>
                                     </div>
                                 </div>

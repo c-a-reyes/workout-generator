@@ -20,6 +20,9 @@ $list_of_workouts = getAllWorkouts();
 $workout_to_update = null;
 $list_of_exercises = getAllExercises();
 
+$metric = null;
+$metricInfo = null;
+
  if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Create")
@@ -48,20 +51,8 @@ $list_of_exercises = getAllExercises();
                 foreach ($_POST['add'] as $exercise)
                 {
                 addExercisesToWorkout(null, $exercise, $_POST['workout-dropdown']);
-                //addMetrics($exercise, null);
-                // if (isset($_POST['distance']) and isset($_POST['duration']))
-                //     {
-                //         addCardioMetrics($exercise, null, $_POST['distance'], $_POST['duration']);   
-                //     }  
-                // elseif (isset($_POST['reps']) and isset($_POST['sets']))
-                //     {
-                //         addLiftingMetrics($exercise, null, $_POST['reps'], $_POST['set']);
-                //     }
+            
                 }
-                // foreach ($_POST['delete'] as $exercise)
-                // {
-                // deleteExercisesFromWorkout(null, $exercise, $_POST['workout-dropdown']);                
-                // }
             }
             else
             {
@@ -147,7 +138,7 @@ $list_of_exercises = getAllExercises();
     </nav>
     <div class="container">
         <h1 class="display-2" style="padding-top: 30px; padding-bottom: 20px">Create or Update a Workout.</h1>
-        <form name="workoutForm" action="view_workout.php" method="post">
+        <form name="workoutForm" action="create_workout.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Workout Name:
                 <input placeholder="Enter workout name" aria-describedby="nameHelp" type="text" class="form-control"
@@ -233,7 +224,7 @@ $list_of_exercises = getAllExercises();
             <br>
             <center>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-light">
+                    <table class="table table-striped table-hover table-light" style="width: 100%">
                         <thead>
                             <tr>
                                 <th scope=" col">Name</th>
@@ -241,56 +232,35 @@ $list_of_exercises = getAllExercises();
                                 <th scope="col">Time Per Set</th>
                                 <th scope="col">Body Part(s)</th>
                                 <th scope="col">Intensity Factor</th>
-                                <!-- <th scope="col">Cardio (Fill One)</th>
-                                <th scope="col">Lifting (Fill One)</th> -->
+                                <th scope="col">Metrics</th>
                                 <th scope="col">Add</th>
                                 <!-- <th scope="col">Remove</th> -->
                             </tr>
                         </thead>
-                        <div class="form-check">
+                        <!-- Start of logic for displaying metrics for create workout page -->
+                        <div id="addExercisesLogic" class="form-check">
                             <?php foreach ($list_of_exercises as $exercise):  ?>
+                            <?php 
+                                $metric = getMetric($exercise['exercise_id']);
+                                $metricInfo = getCardioMetric($metric['metric_id']);
+                            ?>
                             <tr>
                                 <th scope="col"><?php echo $exercise['name']; ?></td>
                                 <td><?php echo $exercise['equipment']; ?></td>
                                 <td><?php echo $exercise['time_per_set']; ?></td>
                                 <td><?php echo $exercise['body_part']; ?></td>
                                 <td><?php echo $exercise['intensity_factor']; ?></td>
-                                <!-- Start of Metrics -->
-                                <!-- <td id="cardioInfo<?php echo $exercise['exercise_id'];?>">
-                                    <div class="row mb-3 mx-3" style="padding: 5px">
-                                        <input aria-describedby="distanceHelp" placeholder="Enter distance" type="text"
-                                            class="form-control" name="distance" />
-                                        <small id="distanceHelp" class="form-text text-muted">e.g. 3.1 miles</small>
-
-                                    </div>
-                                    <div class="row mb-3 mx-3" style="padding: 5px">
-                                        <input aria-describedby="durationHelp" placeholder="Enter duration" type="text"
-                                            class="form-control" name="duration" />
-                                        <small id="durationHelp" class="form-text text-muted">e.g. 15 minutes</small>
-                                    </div>
+                                <?php if ($metricInfo != null): ?>
+                                <td>Distance: <?php echo $metricInfo['distance'] ?> Duration:
+                                    <?php echo $metricInfo['duration'] ?></td>
+                                <?php elseif (getLiftingMetric($metric['metric_id']) != null): ?>
+                                <?php $metricInfo = getLiftingMetric($metric['metric_id']); ?>
+                                <td><?php echo $metricInfo['sets'] ?> set(s), <?php echo $metricInfo['reps'] ?> rep(s)
                                 </td>
-                                <td id="liftingInfo<?php echo $exercise['exercise_id'];?>">
-                                    <div class="row mb-3 mx-3" style="padding: 5px">
-                                        <div class="input-group px-0">
-                                            <input placeholder="Enter reps" type="number" class="form-control"
-                                                name="reps" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">reps</span>
-                                            </div>
-                                        </div>
-                                        <small class="form-text text-muted">i.e. Single movements</small>
-                                    </div>
-                                    <div class="row mb-3 mx-3" style="padding: 5px">
-                                        <div class="input-group px-0">
-                                            <input placeholder="Enter sets" type="number" class="form-control"
-                                                name="sets" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">sets</span>
-                                            </div>
-                                        </div>
-                                        <small class="form-text text-muted">i.e. Series of repetitions</small>
-                                    </div>
-                                </td> -->
+                                <?php else: ?>
+                                <td>
+                                </td>
+                                <?php endif; ?>
                                 <td>
                                     <input value='<?php echo $exercise['exercise_id']?>' name="add[]" type="checkbox">
                                 </td>
