@@ -62,13 +62,8 @@
     <nav class="navbar navbar-dark bg-dark">
         <div>
             <a class="navbar-brand mx-3" href="dashboard.php">Dashboard</a>
-<<<<<<< HEAD
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercises</a>
             <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="view_workout.php">Workouts</a>
-=======
-            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="exercises.php">Exercise Management</a>
-            <a class="nav-item mx-3" style="color: #d9d9d9; text-decoration: none" href="search.php">Search Exercises</a>
->>>>>>> 7e72efe9490e9752671f671534a0572b542c0981
         </div>
         <div class="nav-item mx-3">
             <span class="navbar-text mx-3">
