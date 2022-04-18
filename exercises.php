@@ -374,13 +374,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <!-- metrics start here -->
             <div id="metrics">
                 <div id="dropdown">
-                    <h5 class="mb-3 mx-3">Does your exercise focus on running or lifting?</h5>
+                    <h5 class="mb-3 mx-3">Does your exercise focus on cardio or strength?</h5>
                     <select name="metricsDropdown" id="metricsDropdown" onchange="javascript:showMetrics();"
                         class="form-select mb-3" style="margin:0 auto; max-width: 98%; text-align: center"
                         aria-label="Default select example">
-                        <option class="text-muted" selected>Choose between cardio or lifting...</option>
+                        <option class="text-muted" selected>Choose between cardio or strength...</option>
                         <option value="Cardio">Cardio</option>
-                        <option value="Lifting">Lifting</option>
+                        <option value="Lifting">Strength</option>
                     </select>
                 </div>
                 <div class="row mb-3 mx-2" id="cardioInfo" style="display: none">
