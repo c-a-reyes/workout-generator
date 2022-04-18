@@ -140,7 +140,7 @@ $metricInfo = null;
     </nav>
     <div class="container">
         <h1 class="display-2" style="padding-top: 30px; padding-bottom: 20px">Create or Update a Workout.</h1>
-        <form name="workoutForm" action="create_workout.php" method="post">
+        <form name="workoutForm" action="view_workout.php" method="post">
             <div class="row mb-3 mx-2" style="padding: 5px">
                 Workout Name:
                 <input placeholder="Enter workout name" aria-describedby="nameHelp" type="text" class="form-control"
